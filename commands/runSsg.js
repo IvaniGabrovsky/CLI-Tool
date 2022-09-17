@@ -1,6 +1,6 @@
-const fs = require('fs')
-const lineByLine = require('n-readlines');
-const chalk = require('chalk')
+const fs = require("fs");
+const lineByLine = require("n-readlines");
+const chalk = require("chalk");
 
 const HTML_START = `
 <!doctype html>
@@ -10,75 +10,94 @@ const HTML_START = `
         <title>Filename</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
-    <body>`
+    <body>`;
 
 const HTML_END = `
     </body>
 </html>
-`
+`;
 /**
  * Generate HTMLs
- * @param {object} options 
- * @returns 
+ * @param {object} options
+ * @returns
  */
-function runSsg (options) {
-    let outputFolder = './dist'
-    const { help, version, input, output } = options
-    if (help) {
-        console.log('Display help')
-        return
+function runSsg(options) {
+  let outputFolder = "./dist";
+  const { help, version, input, output } = options;
+  if (help) {
+    chalk.magenta.bold("Display help");
+    chalk.magenta.dim("-i, --input <input-file>", "file or folder to parse");
+    chalk.magenta.dim("-o, --output <output-folder>", "output folder");
+    chalk.magenta.dim("-v, --version", "version");
+    chalk.magenta.dim("-h, --help", "display help for SSG");
+    return;
+  }
+  if (version) {
+    chalk.blue.bold("v1.0.0");
+    return;
+  }
+  if (output) {
+    outputFolder = output;
+  }
+  if (!input) {
+    console.log(chalk.red.bold("Missing required parameter input"));
+    return;
+  }
+  if (outputFolder) {
+    // check if exist delete content of not create it
+    var directory = "./dist";
+    if (!outputFolder.isDirectory()) {
+      outputFolder.mkdirSync(directory);
+    } else {
+      outputFolder.rmdir(directory);
+      outputFolder.mkdirSync(directory);
     }
-    if (version) {
-        console.log('v1.0.0')
-        return
-    }
-    if (output) {
-        outputFolder = output
-    }
-    if (!input) {
-        console.log(
-            chalk.red.bold('Missing required parameter input')
-        )
-        return
-    }
-    if (outputFolder) {
-        // check if exist delete content of not create it
-    }
-    
-    console.log(
-        chalk.green.bold('Generate HTML from input file:', input, ' to folder ', outputFolder)
+  }
+
+  console.log(
+    chalk.green.bold(
+      "Generate HTML from input file:",
+      input,
+      " to folder ",
+      outputFolder
     )
-    processFile(input, outputFolder)
-    console.log(
-        chalk.green.bold('Generate HTML success')
-    )
+  );
+  processFile(input, outputFolder);
+  console.log(chalk.green.bold("Generate HTML success"));
 }
 
 /**
  * Process file to generate HTML content
- * @param {string} fileName 
+ * @param {string} fileName
  * @param {string} outputFolder
  */
-function processFile(fileName, outputFolder) { 
-    // for each line write from text file one line and add it to paragraphs []
-    const paragraph = []
-    const liner = new lineByLine(fileName);
-    let line;
-    while (line = liner.next()) {
-        paragraph.push(line.toString('ascii'));
-    }
-    generateHtml({ fileName, outputFolder, paragraph })
+function processFile(fileName, outputFolder) {
+  // for each line write from text file one line and add it to paragraphs []
+  const paragraph = [];
+  const liner = new lineByLine(fileName);
+  let line;
+  while ((line = liner.next())) {
+    paragraph.push(line.toString("ascii"));
+  }
+  generateHtml({ fileName, outputFolder, paragraph });
 }
 
 /**
  * Process folder to generate HTML content
- * @param {string} folderName 
+ * @param {string} folderName
  */
 function processFolder(folderName) {
-    // read all files/folders from the current folder
-    // for each of content:
-    // if file call: processFile(fileName)
-    // if folder call: processFolder(folderName)
+  // read all files/folders from the current folder
+  // for each of content:
+  // if file call: processFile(fileName)
+  // if folder call: processFolder(folderName)
+  folderName.forEach((element) => {
+    if (element.isDirectory()) {
+      processFolder(element);
+    } else {
+      processFile(element);
+    }
+  });
 }
 
 /**
@@ -86,31 +105,33 @@ function processFolder(folderName) {
  * @param {Object} fileContent { fileName: string, outputFolder; string, paragraphs: [] }
  */
 function generateHtml(fileContent) {
-    const { fileName, outputFolder, paragraph } = fileContent
-    console.log(fileContent)
-    // get html file name from text file name
-    const htmlFile = fileName?.split('.')[0] + '.html'
-    // generate html content
-    let htmlContent = HTML_START
-    paragraph.forEach((paragraph) => {
-        if (paragraph) {
-            htmlContent = htmlContent + '<p>' + paragraph + '</p>\n'
-        }
-    })
-    htmlContent = htmlContent + HTML_END
-    console.log(htmlContent)
-    // write to file
-    fs.writeFile('./' + outputFolder + '/' + htmlFile, htmlContent, function (err) {
-        if (err) {
-            console.log(
-                chalk.red.bold(err)
-            )
-            return
-        };
-        console.log(
-            chalk.green.bold('HTML file: ' + htmlFile + ' successfully generated.')
-        )
-    });
+  const { fileName, outputFolder, paragraph } = fileContent;
+  console.log(fileContent);
+  // get html file name from text file name
+  const htmlFile = fileName?.split(".")[0] + ".html";
+  // generate html content
+  let htmlContent = HTML_START;
+  paragraph.forEach((paragraph) => {
+    if (paragraph) {
+      htmlContent = htmlContent + "<p>" + paragraph + "</p>\n";
+    }
+  });
+  htmlContent = htmlContent + HTML_END;
+  console.log(htmlContent);
+  // write to file
+  fs.writeFile(
+    "./" + outputFolder + "/" + htmlFile,
+    htmlContent,
+    function (err) {
+      if (err) {
+        console.log(chalk.red.bold(err));
+        return;
+      }
+      console.log(
+        chalk.green.bold("HTML file: " + htmlFile + " successfully generated.")
+      );
+    }
+  );
 }
 
-module.exports = runSsg
+module.exports = runSsg;
