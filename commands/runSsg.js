@@ -1,5 +1,5 @@
 const fs = require("fs");
-const path = require('path');
+const path = require("path");
 const lineByLine = require("n-readlines");
 const chalk = require("chalk");
 
@@ -27,15 +27,22 @@ function runSsg(options) {
     let outputFolder = "./dist";
     const { help, version, input, output } = options;
     if (help) {
-        chalk.magenta.bold("Display help");
-        chalk.magenta.dim("-i, --input <input-file>", "file or folder to parse");
-        chalk.magenta.dim("-o, --output <output-folder>", "output folder");
-        chalk.magenta.dim("-v, --version", "version");
-        chalk.magenta.dim("-h, --help", "display help for SSG");
+        console.log(chalk.magenta.bold("Display help"));
+        console.log(
+            chalk.magenta.dim(
+                "-i, --input <input-file>",
+                "file or folder to parse"
+            )
+        );
+        console.log(
+            chalk.magenta.dim("-o, --output <output-folder>", "output folder")
+        );
+        console.log(chalk.magenta.dim("-v, --version", "version"));
+        console.log(chalk.magenta.dim("-h, --help", "display help for SSG"));
         return;
     }
     if (version) {
-        chalk.blue.bold("v1.0.0");
+        console.log(chalk.blue.bold("v1.0.0"));
         return;
     }
     if (output) {
@@ -49,7 +56,7 @@ function runSsg(options) {
     // check if exist delete content or if not create it
     if (isExists(outputFolder)) {
         if (isDir(outputFolder)) {
-            removeDir(outputFolder)
+            removeDir(outputFolder);
         } else {
             console.log(chalk.red.bold("Output must be folder"));
             return;
@@ -58,13 +65,12 @@ function runSsg(options) {
         makeDir(outputFolder);
     }
 
-
     console.log(
         chalk.blue.bold(
-        "Generate HTML from input:",
-        input,
-        " to folder ",
-        outputFolder
+            "Generate HTML from input:",
+            input,
+            " to folder ",
+            outputFolder
         )
     );
     if (isDir(input)) {
@@ -98,14 +104,13 @@ function processFile(fileName, outputFolder) {
  */
 function processDir(folderName, outputFolder) {
     fs.readdirSync(folderName).forEach((fileName) => {
-        const fullPath = path.join(folderPath, fileName)
+        const fullPath = path.join(folderPath, fileName);
         if (isDir(fullPath)) {
             processDir(fullPath);
         } else {
             processFile(fullPath);
         }
-
-    })
+    });
 }
 
 /**
@@ -113,33 +118,33 @@ function processDir(folderName, outputFolder) {
  * @param {Object} fileContent { fileName: string, outputFolder; string, paragraphs: [] }
  */
 function generateHtml(fileContent) {
-  const { fileName, outputFolder, paragraph } = fileContent;
-//   console.log(fileContent);
-  // get html file name from text file name
-  const htmlFile = fileName?.split(".")[0] + ".html";
-  // generate html content
-  let htmlContent = HTML_START;
-  paragraph.forEach((paragraph) => {
-    if (paragraph) {
-      htmlContent = htmlContent + "<p>" + paragraph + "</p>\n";
-    }
-  });
-  htmlContent = htmlContent + HTML_END;
-  // console.log(htmlContent);
-  // write to file
-  fs.writeFile(
-    "./" + outputFolder + "/" + htmlFile,
-    htmlContent,
-    function (err) {
-      if (err) {
-        console.log(chalk.red.bold(err));
-        return;
-      }
-    //   console.log(
-    //     chalk.green.bold("HTML file: " + htmlFile + " successfully generated.")
-    //   );
-    }
-  );
+    const { fileName, outputFolder, paragraph } = fileContent;
+    //   console.log(fileContent);
+    // get html file name from text file name
+    const htmlFile = fileName?.split(".")[0] + ".html";
+    // generate html content
+    let htmlContent = HTML_START;
+    paragraph.forEach((paragraph) => {
+        if (paragraph) {
+            htmlContent = htmlContent + "<p>" + paragraph + "</p>\n";
+        }
+    });
+    htmlContent = htmlContent + HTML_END;
+    // console.log(htmlContent);
+    // write to file
+    fs.writeFile(
+        "./" + outputFolder + "/" + htmlFile,
+        htmlContent,
+        function (err) {
+            if (err) {
+                console.log(chalk.red.bold(err));
+                return;
+            }
+            //   console.log(
+            //     chalk.green.bold("HTML file: " + htmlFile + " successfully generated.")
+            //   );
+        }
+    );
 }
 
 function isDir(pathItem) {
@@ -172,19 +177,19 @@ function isExists(pathItem) {
 function makeDir(pathItem) {
     try {
         if (!fs.existsSync(pathItem)) {
-            fs.mkdirSync(pathItem)
+            fs.mkdirSync(pathItem);
         }
     } catch (err) {
-        console.error(err)
+        console.error(err);
     }
 }
 
 function removeDir(pathItem) {
     fs.rm(pathItem, { recursive: true }, (err) => {
         if (err) {
-            throw err
+            throw err;
         }
-    })
+    });
 }
 
 module.exports = runSsg;
