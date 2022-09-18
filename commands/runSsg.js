@@ -1,4 +1,5 @@
 const fs = require("fs");
+const path = require('path');
 const lineByLine = require("n-readlines");
 const chalk = require("chalk");
 
@@ -16,54 +17,63 @@ const HTML_END = `
     </body>
 </html>
 `;
+
 /**
  * Generate HTMLs
  * @param {object} options
  * @returns
  */
 function runSsg(options) {
-  let outputFolder = "./dist";
-  const { help, version, input, output } = options;
-  if (help) {
-    chalk.magenta.bold("Display help");
-    chalk.magenta.dim("-i, --input <input-file>", "file or folder to parse");
-    chalk.magenta.dim("-o, --output <output-folder>", "output folder");
-    chalk.magenta.dim("-v, --version", "version");
-    chalk.magenta.dim("-h, --help", "display help for SSG");
-    return;
-  }
-  if (version) {
-    chalk.blue.bold("v1.0.0");
-    return;
-  }
-  if (output) {
-    outputFolder = output;
-  }
-  if (!input) {
-    console.log(chalk.red.bold("Missing required parameter input"));
-    return;
-  }
-  if (outputFolder) {
-    // check if exist delete content of not create it
-    var directory = "./dist";
-    if (!outputFolder.isDirectory()) {
-      outputFolder.mkdirSync(directory);
-    } else {
-      outputFolder.rmdir(directory);
-      outputFolder.mkdirSync(directory);
+    let outputFolder = "./dist";
+    const { help, version, input, output } = options;
+    if (help) {
+        chalk.magenta.bold("Display help");
+        chalk.magenta.dim("-i, --input <input-file>", "file or folder to parse");
+        chalk.magenta.dim("-o, --output <output-folder>", "output folder");
+        chalk.magenta.dim("-v, --version", "version");
+        chalk.magenta.dim("-h, --help", "display help for SSG");
+        return;
     }
-  }
+    if (version) {
+        chalk.blue.bold("v1.0.0");
+        return;
+    }
+    if (output) {
+        outputFolder = output;
+    }
+    if (!input) {
+        console.log(chalk.red.bold("Missing required parameter -i, --input"));
+        return;
+    }
 
-  console.log(
-    chalk.green.bold(
-      "Generate HTML from input file:",
-      input,
-      " to folder ",
-      outputFolder
-    )
-  );
-  processFile(input, outputFolder);
-  console.log(chalk.green.bold("Generate HTML success"));
+    // check if exist delete content or if not create it
+    if (isExists(outputFolder)) {
+        if (isDir(outputFolder)) {
+            removeDir(outputFolder)
+        } else {
+            console.log(chalk.red.bold("Output must be folder"));
+            return;
+        }
+    } else {
+        makeDir(outputFolder);
+    }
+
+
+    console.log(
+        chalk.blue.bold(
+        "Generate HTML from input:",
+        input,
+        " to folder ",
+        outputFolder
+        )
+    );
+    if (isDir(input)) {
+        processDir(input, outputFolder);
+    } else {
+        processFile(input, outputFolder);
+    }
+    processFile(input, outputFolder);
+    console.log(chalk.green.bold("Generate HTML success"));
 }
 
 /**
@@ -72,32 +82,30 @@ function runSsg(options) {
  * @param {string} outputFolder
  */
 function processFile(fileName, outputFolder) {
-  // for each line write from text file one line and add it to paragraphs []
-  const paragraph = [];
-  const liner = new lineByLine(fileName);
-  let line;
-  while ((line = liner.next())) {
-    paragraph.push(line.toString("ascii"));
-  }
-  generateHtml({ fileName, outputFolder, paragraph });
+    // for each line write from text file one line and add it to paragraphs []
+    const paragraph = [];
+    const liner = new lineByLine(fileName);
+    let line;
+    while ((line = liner.next())) {
+        paragraph.push(line.toString("ascii"));
+    }
+    generateHtml({ fileName, outputFolder, paragraph });
 }
 
 /**
  * Process folder to generate HTML content
  * @param {string} folderName
  */
-function processFolder(folderName) {
-  // read all files/folders from the current folder
-  // for each of content:
-  // if file call: processFile(fileName)
-  // if folder call: processFolder(folderName)
-  folderName.forEach((element) => {
-    if (element.isDirectory()) {
-      processFolder(element);
-    } else {
-      processFile(element);
-    }
-  });
+function processDir(folderName, outputFolder) {
+    fs.readdirSync(folderName).forEach((fileName) => {
+        const fullPath = path.join(folderPath, fileName)
+        if (isDir(fullPath)) {
+            processDir(fullPath);
+        } else {
+            processFile(fullPath);
+        }
+
+    })
 }
 
 /**
@@ -106,7 +114,7 @@ function processFolder(folderName) {
  */
 function generateHtml(fileContent) {
   const { fileName, outputFolder, paragraph } = fileContent;
-  console.log(fileContent);
+//   console.log(fileContent);
   // get html file name from text file name
   const htmlFile = fileName?.split(".")[0] + ".html";
   // generate html content
@@ -117,7 +125,7 @@ function generateHtml(fileContent) {
     }
   });
   htmlContent = htmlContent + HTML_END;
-  console.log(htmlContent);
+  // console.log(htmlContent);
   // write to file
   fs.writeFile(
     "./" + outputFolder + "/" + htmlFile,
@@ -127,11 +135,56 @@ function generateHtml(fileContent) {
         console.log(chalk.red.bold(err));
         return;
       }
-      console.log(
-        chalk.green.bold("HTML file: " + htmlFile + " successfully generated.")
-      );
+    //   console.log(
+    //     chalk.green.bold("HTML file: " + htmlFile + " successfully generated.")
+    //   );
     }
   );
+}
+
+function isDir(pathItem) {
+    try {
+        var stat = fs.lstatSync(pathItem);
+        return stat.isDirectory();
+    } catch (e) {
+        // lstatSync throws an error if path doesn't exist
+        return false;
+    }
+}
+
+function isFile(pathItem) {
+    return !!path.extname(pathItem);
+}
+
+function isExists(pathItem) {
+    try {
+        if (fs.existsSync(pathItem)) {
+            return true;
+        } else {
+            return false;
+        }
+    } catch (err) {
+        console.error(err);
+        return false;
+    }
+}
+
+function makeDir(pathItem) {
+    try {
+        if (!fs.existsSync(pathItem)) {
+            fs.mkdirSync(pathItem)
+        }
+    } catch (err) {
+        console.error(err)
+    }
+}
+
+function removeDir(pathItem) {
+    fs.rm(pathItem, { recursive: true }, (err) => {
+        if (err) {
+            throw err
+        }
+    })
 }
 
 module.exports = runSsg;
