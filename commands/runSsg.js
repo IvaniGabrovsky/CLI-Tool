@@ -76,9 +76,9 @@ function runSsg(options) {
     if (isDir(input)) {
         processDir(input, outputFolder);
     } else {
-        processFile(input, outputFolder);
+        processFile(input, "", outputFolder);
     }
-    processFile(input, outputFolder);
+    // processFile(input, outputFolder);
     console.log(chalk.green.bold("Generate HTML success"));
 }
 
@@ -87,15 +87,35 @@ function runSsg(options) {
  * @param {string} fileName
  * @param {string} outputFolder
  */
-function processFile(fileName, outputFolder) {
+function processFile(fileName, folderName, outputFolder) {
     // for each line write from text file one line and add it to paragraphs []
+    console.log(
+        "processFile() outputFolder:",
+        outputFolder,
+        " folderName:",
+        folderName,
+        " fileName:",
+        fileName,
+        " isFile()",
+        isFile(fileName)
+    );
     const paragraph = [];
-    const liner = new lineByLine(fileName);
+    const liner = new lineByLine(path.join(folderName, fileName));
     let line;
     while ((line = liner.next())) {
         paragraph.push(line.toString("ascii"));
     }
-    generateHtml({ fileName, outputFolder, paragraph });
+    if (!isExists(outputFolder)) {
+        makeDir(outputFolder);
+    }
+    if (!isExists(path.join(outputFolder, folderName))) {
+        makeDir(path.join(outputFolder, folderName));
+    }
+    generateHtml({
+        fileName,
+        outputFolder: path.join(outputFolder, folderName),
+        paragraph,
+    });
 }
 
 /**
@@ -104,12 +124,24 @@ function processFile(fileName, outputFolder) {
  */
 function processDir(folderName, outputFolder) {
     fs.readdirSync(folderName).forEach((fileName) => {
-        const fullPath = path.join(folderPath, fileName);
-        if (isDir(fullPath)) {
-            processDir(fullPath);
-        } else {
-            processFile(fullPath);
+        console.log("processDir() fileName:", fileName);
+        const fullPath = path.join(folderName, fileName);
+        console.log(
+            "folderName:",
+            folderName,
+            " fileName:",
+            fileName,
+            " fullPath:",
+            fullPath,
+            " isFile()",
+            isFile(fileName)
+        );
+        if (isFile(fullPath)) {
+            processFile(fileName, folderName, outputFolder);
         }
+        // else {
+        //     processDir(fullPath, outputFolder);
+        // }
     });
 }
 
@@ -158,7 +190,13 @@ function isDir(pathItem) {
 }
 
 function isFile(pathItem) {
-    return !!path.extname(pathItem);
+    try {
+        var stat = fs.lstatSync(pathItem);
+        return !stat.isDirectory();
+    } catch (e) {
+        // lstatSync throws an error if path doesn't exist
+        return false;
+    }
 }
 
 function isExists(pathItem) {
