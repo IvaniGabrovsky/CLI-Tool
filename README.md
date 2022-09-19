@@ -24,8 +24,8 @@ npm i -g
 
 ## Usage
 
-To get a list of options type "node ssg.js " followed by -h.
-FOr any of the commands listed below in the help menu type in "node ssg.js " before the cammand.
+To get a list of options type "ssg-modern-tool" followed by -h.
+For any of the commands listed below in the help menu type in "ssg-modern-tool" before the command.
 "Display help"
 "-i, --input <input-file>", "file or folder to parse"
 "-o, --output <output-folder>", "output folder"
