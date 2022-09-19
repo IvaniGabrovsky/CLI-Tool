@@ -1,4 +1,4 @@
-# TODOS-CLI
+# ssg-modern-tool
 
 A Cli tool reading an file with text and converting to an out file in html using Node.js.
 
@@ -7,7 +7,7 @@ A Cli tool reading an file with text and converting to an out file in html using
 Clone the repository:
 
 ```
-git clone https://github.com/shahednasser/todos-cli.git
+git clone https://github.com/IvaniGabrovsky/ssg-modern-tool
 ```
 
 Install the dependencies:
