@@ -1,5 +1,5 @@
 {
-  "name": "ssg-modern-tool",
+  "name": "text-ssg-tool",
   "version": "1.0.2",
   "description": "A CLI to manage a TODO list",
   "main": "index.js",
@@ -9,7 +9,7 @@
   "keywords": [
     "MIT"
   ],
-  "author": "Shahed Nasser",
+  "author": "Ivan Gabrovsky",
   "license": "MIT",
   "dependencies": {
     "chalk": "^4.1.0",
@@ -18,6 +18,6 @@
     "n-readlines": "^1.0.1"
   },
   "bin": {
-    "ssg-modern-tool": "ssg.js"
+    "text-ssg-tool": "ssg.js"
   }
 }

@@ -1,4 +1,4 @@
-# ssg-modern-tool
+# text-ssg-tool
 
 A Cli tool reading an file with text and converting to an out file in html using Node.js.
 
@@ -7,7 +7,7 @@ A Cli tool reading an file with text and converting to an out file in html using
 Clone the repository:
 
 ```
-git clone https://github.com/IvaniGabrovsky/ssg-modern-tool
+git clone https://github.com/IvaniGabrovsky/text-ssg-tool
 ```
 
 Install the dependencies:
@@ -24,8 +24,8 @@ npm i -g
 
 ## Usage
 
-To get a list of options type "ssg-modern-tool" followed by -h.
-For any of the commands listed below in the help menu type in "ssg-modern-tool" before the command.
+To get a list of options type "text-ssg-tool" followed by -h.
+For any of the commands listed below in the help menu type in "text-ssg-tool" before the command.
 "Display help"
 "-i, --input <input-file>", "file or folder to parse"
 "-o, --output <output-folder>", "output folder"
