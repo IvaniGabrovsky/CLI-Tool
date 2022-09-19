@@ -27,7 +27,7 @@ function runSsg(options) {
     let outputFolder = "./dist";
     const { help, version, input, output } = options;
     if (help) {
-        console.log(chalk.magenta.bold("Display help"));
+        console.log(chalk.magenta.bold("Help"));
         console.log(
             chalk.magenta.dim(
                 "-i, --input <input-file>",
@@ -78,7 +78,6 @@ function runSsg(options) {
     } else {
         processFile(input, "", outputFolder);
     }
-    // processFile(input, outputFolder);
     console.log(chalk.green.bold("Generate HTML success"));
 }
 
@@ -89,16 +88,6 @@ function runSsg(options) {
  */
 function processFile(fileName, folderName, outputFolder) {
     // for each line write from text file one line and add it to paragraphs []
-    console.log(
-        "processFile() outputFolder:",
-        outputFolder,
-        " folderName:",
-        folderName,
-        " fileName:",
-        fileName,
-        " isFile()",
-        isFile(fileName)
-    );
     const paragraph = [];
     const liner = new lineByLine(path.join(folderName, fileName));
     let line;
@@ -124,18 +113,7 @@ function processFile(fileName, folderName, outputFolder) {
  */
 function processDir(folderName, outputFolder) {
     fs.readdirSync(folderName).forEach((fileName) => {
-        console.log("processDir() fileName:", fileName);
         const fullPath = path.join(folderName, fileName);
-        console.log(
-            "folderName:",
-            folderName,
-            " fileName:",
-            fileName,
-            " fullPath:",
-            fullPath,
-            " isFile()",
-            isFile(fileName)
-        );
         if (isFile(fullPath)) {
             processFile(fileName, folderName, outputFolder);
         }
@@ -151,7 +129,6 @@ function processDir(folderName, outputFolder) {
  */
 function generateHtml(fileContent) {
     const { fileName, outputFolder, paragraph } = fileContent;
-    //   console.log(fileContent);
     // get html file name from text file name
     const htmlFile = fileName?.split(".")[0] + ".html";
     // generate html content
@@ -162,7 +139,6 @@ function generateHtml(fileContent) {
         }
     });
     htmlContent = htmlContent + HTML_END;
-    // console.log(htmlContent);
     // write to file
     fs.writeFile(
         "./" + outputFolder + "/" + htmlFile,
@@ -172,9 +148,6 @@ function generateHtml(fileContent) {
                 console.log(chalk.red.bold(err));
                 return;
             }
-            //   console.log(
-            //     chalk.green.bold("HTML file: " + htmlFile + " successfully generated.")
-            //   );
         }
     );
 }
