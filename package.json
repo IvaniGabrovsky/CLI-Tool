@@ -4,7 +4,7 @@
   "description": "A CLI to manage a TODO list",
   "main": "index.js",
   "scripts": {
-    "start": "node http-server ./dist"
+    "start": "node ./node_modules/.bin/http-server ./dist"
   },
   "keywords": [
     "MIT"
