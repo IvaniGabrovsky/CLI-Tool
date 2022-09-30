@@ -3,7 +3,7 @@ const { program } = require("commander");
 const runSsg = require("./commands/runSsg");
 
 program
-    .name("ssg-util")
+    .name("text-ssg-tool")
     .description("Static File Generator from text files")
     .option("-i, --input <input-file>", "file or folder to parse")
     .option(
