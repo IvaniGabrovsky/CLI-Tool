@@ -24,10 +24,10 @@ npm i -g
 
 ## Usage
 
-To get a list of options type "text-ssg-tool" followed by -h.
-For any of the commands listed below in the help menu type in "text-ssg-tool" before the command.
-"Display help"
-"-i, --input <input-file>", "file or folder to parse"
-"-o, --output <output-folder>", "output folder"
-"-v, --version", "version"
-"-h, --help", "display help for SSG"
+To get a list of options type "text-ssg-tool" followed by -h.</br>
+For any of the commands listed below in the help menu type in "text-ssg-tool" before the command.</br>
+"Display help"</br>
+"-i, --input <input-file>", "file or folder to parse"</br>
+"-o, --output <output-folder>", "output folder"</br>
+"-v, --version", "version"</br>
+"-h, --help", "display help for SSG"</br>
