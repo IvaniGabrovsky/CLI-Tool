@@ -2,6 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const lineByLine = require("n-readlines");
 const chalk = require("chalk");
+const { packageVersion } = require("../../../package.json");
 
 const HTML_START = `
 <!doctype html>
@@ -42,7 +43,7 @@ function runSsg(options) {
         return;
     }
     if (version) {
-        console.log(chalk.blue.bold("v1.0.0"));
+        console.log(chalk.blue.bold(packageVersion));
         return;
     }
     if (output) {
