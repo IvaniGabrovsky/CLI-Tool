@@ -8,7 +8,7 @@ const HTML_START = `
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <title>Filename</title>
+        <title>${fileName}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body>`;
@@ -57,6 +57,7 @@ function runSsg(options) {
     if (isExists(outputFolder)) {
         if (isDir(outputFolder)) {
             removeDir(outputFolder);
+            makeDir(outputFolder);
         } else {
             console.log(chalk.red.bold("Output must be folder"));
             return;
