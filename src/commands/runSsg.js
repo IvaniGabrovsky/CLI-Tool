@@ -2,7 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const lineByLine = require("n-readlines");
 const chalk = require("chalk");
-const { packageVersion } = require("../../../package.json");
+const { version } = require("../package.json");
 
 const HTML_START = `
 <!doctype html>
@@ -26,7 +26,7 @@ const HTML_END = `
  */
 function runSsg(options) {
     let outputFolder = "./dist";
-    const { help, version, input, output } = options;
+    const { help, ssgVersion, input, output } = options;
     if (help) {
         console.log(chalk.magenta.bold("Help"));
         console.log(
@@ -43,7 +43,7 @@ function runSsg(options) {
         return;
     }
     if (version) {
-        console.log(chalk.blue.bold(packageVersion));
+        console.log(chalk.blue.bold(ssgVersion));
         return;
     }
     if (output) {
