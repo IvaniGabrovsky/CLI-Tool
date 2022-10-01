@@ -6,7 +6,7 @@ const { version } = require("../../package.json");
 
 // return the string start part of html
 const getStartHtml = (fileName) => {
-    return 
+    return(
 `<!doctype html>
 <html lang="en">
     <head>
@@ -14,7 +14,7 @@ const getStartHtml = (fileName) => {
         <title>${fileName}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
-    <body>`;
+    <body>`);
 }
 
 // contain the end of html
@@ -147,7 +147,7 @@ function generateHtml(fileContent) {
     });
     htmlContent = htmlContent + HTML_END;
     fs.writeFile(
-        "./" + outputFolder + "/" + htmlFile,
+        path.join(outputFolder, htmlFile),
         htmlContent,
         function (err) {
             if (err) {
