@@ -2,10 +2,12 @@ const fs = require("fs");
 const path = require("path");
 const lineByLine = require("n-readlines");
 const chalk = require("chalk");
-const { version } = require("../package.json");
+const { version } = require("../../package.json");
 
-const HTML_START = `
-<!doctype html>
+// return the string start part of html
+const getStartHtml = (fileName) => {
+    return 
+`<!doctype html>
 <html lang="en">
     <head>
         <meta charset="utf-8">
@@ -13,7 +15,9 @@ const HTML_START = `
         <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body>`;
+}
 
+// contain the end of html
 const HTML_END = `
     </body>
 </html>
@@ -26,7 +30,9 @@ const HTML_END = `
  */
 function runSsg(options) {
     let outputFolder = "./dist";
-    const { help, ssgVersion, input, output } = options;
+    // destructure parameters from object
+    const { help, version: optionVersion, input, output } = options;
+    // print list of possible commands
     if (help) {
         console.log(chalk.magenta.bold("Help"));
         console.log(
@@ -42,31 +48,30 @@ function runSsg(options) {
         console.log(chalk.magenta.dim("-h, --help", "display help for SSG"));
         return;
     }
-    if (version) {
-        console.log(chalk.blue.bold(ssgVersion));
+    // print version of this tool
+    if (optionVersion) {
+        console.log(chalk.blue.bold(version));
         return;
     }
+    // if user provides -o option we will use the provided folder
     if (output) {
         outputFolder = output;
     }
+    // if user does not provided any input
     if (!input) {
         console.log(chalk.red.bold("Missing required parameter -i, --input"));
         return;
     }
 
-    // check if exist delete content or if not create it
-    if (isExists(outputFolder)) {
-        if (isDir(outputFolder)) {
+    // check if output folder exist and is folder exists delete content or if it does not exist create output folder
+    if (isExists(outputFolder) && isDir(outputFolder)) { 
             removeDir(outputFolder);
             makeDir(outputFolder);
-        } else {
-            console.log(chalk.red.bold("Output must be folder"));
-            return;
-        }
     } else {
         makeDir(outputFolder);
     }
 
+    // Display message to let user know html has been generated from input into the dist directory
     console.log(
         chalk.blue.bold(
             "Generate HTML from input:",
@@ -75,11 +80,13 @@ function runSsg(options) {
             outputFolder
         )
     );
+
     if (isDir(input)) {
         processDir(input, outputFolder);
     } else {
         processFile(input, "", outputFolder);
     }
+    // Display success message to user
     console.log(chalk.green.bold("Generate HTML success"));
 }
 
@@ -131,17 +138,14 @@ function processDir(folderName, outputFolder) {
  */
 function generateHtml(fileContent) {
     const { fileName, outputFolder, paragraph } = fileContent;
-    // get html file name from text file name
     const htmlFile = fileName?.split(".")[0] + ".html";
-    // generate html content
-    let htmlContent = HTML_START;
+    let htmlContent = getStartHtml(fileName);
     paragraph.forEach((paragraph) => {
         if (paragraph) {
             htmlContent = htmlContent + "<p>" + paragraph + "</p>\n";
         }
     });
     htmlContent = htmlContent + HTML_END;
-    // write to file
     fs.writeFile(
         "./" + outputFolder + "/" + htmlFile,
         htmlContent,

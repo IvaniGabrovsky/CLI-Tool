@@ -1,6 +1,6 @@
 #! /usr/bin/env node
 const { program } = require("commander");
-const runSsg = require("./commands/runSsg");
+const runSsg = require("./src/commands/runSsg");
 
 program
     .name("text-ssg-tool")
