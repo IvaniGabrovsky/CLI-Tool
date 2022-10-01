@@ -1,8 +1,8 @@
 const fs = require("fs");
 const path = require("path");
-const lineByLine = require("n-readlines");
 const chalk = require("chalk");
 const { version } = require("../../package.json");
+const { isDir, isFile, isExists, makeDir, removeDir} = require("../utils/osUtils");
 
 // return the string start part of html
 const getStartHtml = (fileName) => {
@@ -153,55 +153,55 @@ function generateHtml(fileContent) {
     );
 }
 
-function isDir(pathItem) {
-    try {
-        var stat = fs.lstatSync(pathItem);
-        return stat.isDirectory();
-    } catch (e) {
-        // lstatSync throws an error if path doesn't exist
-        return false;
-    }
-}
+// function isDir(pathItem) {
+//     try {
+//         var stat = fs.lstatSync(pathItem);
+//         return stat.isDirectory();
+//     } catch (e) {
+//         // lstatSync throws an error if path doesn't exist
+//         return false;
+//     }
+// }
 
-function isFile(pathItem) {
-    try {
-        var stat = fs.lstatSync(pathItem);
-        return !stat.isDirectory();
-    } catch (e) {
-        // lstatSync throws an error if path doesn't exist
-        return false;
-    }
-}
+// function isFile(pathItem) {
+//     try {
+//         var stat = fs.lstatSync(pathItem);
+//         return !stat.isDirectory();
+//     } catch (e) {
+//         // lstatSync throws an error if path doesn't exist
+//         return false;
+//     }
+// }
 
-function isExists(pathItem) {
-    try {
-        if (fs.existsSync(pathItem)) {
-            return true;
-        } else {
-            return false;
-        }
-    } catch (err) {
-        console.error(err);
-        return false;
-    }
-}
+// function isExists(pathItem) {
+//     try {
+//         if (fs.existsSync(pathItem)) {
+//             return true;
+//         } else {
+//             return false;
+//         }
+//     } catch (err) {
+//         console.error(err);
+//         return false;
+//     }
+// }
 
-function makeDir(pathItem) {
-    try {
-        if (!fs.existsSync(pathItem)) {
-            fs.mkdirSync(pathItem);
-        }
-    } catch (err) {
-        console.error(err);
-    }
-}
+// function makeDir(pathItem) {
+//     try {
+//         if (!fs.existsSync(pathItem)) {
+//             fs.mkdirSync(pathItem);
+//         }
+//     } catch (err) {
+//         console.error(err);
+//     }
+// }
 
-function removeDir(pathItem) {
-    fs.rmSync(pathItem, { recursive: true }, (err) => {
-        if (err) {
-            throw err;
-        }
-    });
-}
+// function removeDir(pathItem) {
+//     fs.rmSync(pathItem, { recursive: true }, (err) => {
+//         if (err) {
+//             throw err;
+//         }
+//     });
+// }
 
 module.exports = runSsg;
