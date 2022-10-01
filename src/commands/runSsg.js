@@ -96,13 +96,8 @@ function runSsg(options) {
  * @param {string} outputFolder
  */
 function processFile(fileName, folderName, outputFolder) {
-    // for each line write from text file one line and add it to paragraphs []
-    const paragraph = [];
-    const liner = new lineByLine(path.join(folderName, fileName));
-    let line;
-    while ((line = liner.next())) {
-        paragraph.push(line.toString("ascii"));
-    }
+    const data = fs.readFileSync(path.join(folderName, fileName), {encoding:'utf8', flag:'r'});
+    const paragraph = data.split(/\r?\n\r?\n/)
     if (!isExists(outputFolder)) {
         makeDir(outputFolder);
     }
@@ -202,7 +197,7 @@ function makeDir(pathItem) {
 }
 
 function removeDir(pathItem) {
-    fs.rm(pathItem, { recursive: true }, (err) => {
+    fs.rmSync(pathItem, { recursive: true }, (err) => {
         if (err) {
             throw err;
         }
