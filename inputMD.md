@@ -13,7 +13,7 @@ one topic of conversation through the length and breadth of
 England. For a whole day my companion had rambled about the room
 with his chin upon his chest and his brows knitted, charging and
 recharging his pipe with the strongest black tobacco, and
-absolutely deaf to any of my questions or remarks. Fresh editions
+absolutely deaf to any of my questions or remarks. ---Fresh editions
 of every paper had been sent up by our news agent, only to be
 glanced over and tossed down into a corner. Yet, silent as he
 was, I knew perfectly well what it was over which he was

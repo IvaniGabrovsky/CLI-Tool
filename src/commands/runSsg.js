@@ -111,6 +111,7 @@ function processFile(fileName, folderName, outputFolder, language) {
         data = processMD(data, "_", "<i>", "</i>");
         data = processMD(data, "**", "<strong>", "</strong>");
         data = processMD(data, "*", "<i>", "</i>");
+        data = processMD(data, "---", "<hr>", "");
     }
     const paragraph = data.split(/\r?\n\r?\n/)
     if (!isExists(outputFolder)) {
