@@ -5,10 +5,10 @@ const { version } = require("../../package.json");
 const { isDir, isFile, isExists, makeDir, removeDir} = require("../utils/osUtils");
 
 // return the string start part of html
-const getStartHtml = (fileName) => {
+const getStartHtml = (fileName, language) => {
     return(
 `<!doctype html>
-<html lang="en">
+<html lang="${language}">
     <head>
         <meta charset="utf-8">
         <title>${fileName}</title>
@@ -30,8 +30,9 @@ const HTML_END = `
  */
 function runSsg(options) {
     let outputFolder = "./dist";
+    let language = 'en-CA';
     // destructure parameters from object
-    const { help, version: optionVersion, input, output } = options;
+    const { help, version: optionVersion, input, output, lang } = options;
     // print list of possible commands
     if (help) {
         console.log(chalk.magenta.bold("Help"));
@@ -46,6 +47,7 @@ function runSsg(options) {
         );
         console.log(chalk.magenta.dim("-v, --version", "version"));
         console.log(chalk.magenta.dim("-h, --help", "display help for SSG"));
+        console.log(chalk.magenta.dim("-l, --lang", "language support"));
         return;
     }
     // print version of this tool
@@ -56,6 +58,10 @@ function runSsg(options) {
     // if user provides -o option we will use the provided folder
     if (output) {
         outputFolder = output;
+    }
+    // if user provides -l option we will use the provided folder
+    if (lang) {
+        language = lang;
     }
     // if user does not provided any input
     if (!input) {
@@ -77,14 +83,16 @@ function runSsg(options) {
             "Generate HTML from input:",
             input,
             " to folder ",
-            outputFolder
+            outputFolder,
+            " in",
+            language
         )
     );
 
     if (isDir(input)) {
-        processDir(input, outputFolder);
+        processDir(input, outputFolder, language);
     } else {
-        processFile(input, "", outputFolder);
+        processFile(input, "", outputFolder, language);
     }
     // Display success message to user
     console.log(chalk.green.bold("Generate HTML success"));
@@ -95,7 +103,7 @@ function runSsg(options) {
  * @param {string} fileName
  * @param {string} outputFolder
  */
-function processFile(fileName, folderName, outputFolder) {
+function processFile(fileName, folderName, outputFolder, language) {
     const fileExtension = fileName?.split(".")[1];
     var data = fs.readFileSync(path.join(folderName, fileName), {encoding:'utf8', flag:'r'});
     if('MD' === fileExtension?.toUpperCase()){
@@ -115,6 +123,7 @@ function processFile(fileName, folderName, outputFolder) {
         fileName,
         outputFolder: path.join(outputFolder, folderName),
         paragraph,
+        language
     });
 }
 
@@ -140,11 +149,11 @@ function processMD(mdText, pattern, openTag, closeTag) {
  * Process folder to generate HTML content
  * @param {string} folderName
  */
-function processDir(folderName, outputFolder) {
+function processDir(folderName, outputFolder, language) {
     fs.readdirSync(folderName).forEach((fileName) => {
         const fullPath = path.join(folderName, fileName);
         if (isFile(fullPath)) {
-            processFile(fileName, folderName, outputFolder);
+            processFile(fileName, folderName, outputFolder, language);
         }
         // else {
         //     processDir(fullPath, outputFolder);
@@ -157,9 +166,9 @@ function processDir(folderName, outputFolder) {
  * @param {Object} fileContent { fileName: string, outputFolder; string, paragraphs: [] }
  */
 function generateHtml(fileContent) {
-    const { fileName, outputFolder, paragraph } = fileContent;
+    const { fileName, outputFolder, paragraph, language } = fileContent;
     const htmlFile = fileName?.split(".")[0] + ".html";
-    let htmlContent = getStartHtml(fileName);
+    let htmlContent = getStartHtml(fileName, language);
     paragraph.forEach((paragraph) => {
         if (paragraph) {
             htmlContent = htmlContent + "<p>" + paragraph + "</p>\n";

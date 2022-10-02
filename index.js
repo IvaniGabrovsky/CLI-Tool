@@ -12,6 +12,7 @@ program
     )
     .option("-v, --version", "version")
     .option("-h, --help", "display help for SSG")
+    .option("-l, --lang <laguage>", "language support")
     .action(runSsg);
 
 program.parse();
