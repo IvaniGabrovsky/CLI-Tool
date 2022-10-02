@@ -98,7 +98,7 @@ function runSsg(options) {
 function processFile(fileName, folderName, outputFolder) {
     const fileExtension = fileName?.split(".")[1];
     var data = fs.readFileSync(path.join(folderName, fileName), {encoding:'utf8', flag:'r'});
-    if('md'.localeCompare(fileExtension, undefined, { sensitivity: 'accent' })){
+    if('MD' === fileExtension?.toUpperCase()){
         data = processMD(data, "__", "<strong>", "</strong>");
         data = processMD(data, "_", "<i>", "</i>");
         data = processMD(data, "**", "<strong>", "</strong>");
