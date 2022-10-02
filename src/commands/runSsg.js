@@ -96,7 +96,14 @@ function runSsg(options) {
  * @param {string} outputFolder
  */
 function processFile(fileName, folderName, outputFolder) {
-    const data = fs.readFileSync(path.join(folderName, fileName), {encoding:'utf8', flag:'r'});
+    const fileExtension = fileName?.split(".")[1];
+    var data = fs.readFileSync(path.join(folderName, fileName), {encoding:'utf8', flag:'r'});
+    if('md'.localeCompare(fileExtension, undefined, { sensitivity: 'accent' })){
+        data = processMD(data, "__", "<strong>", "</strong>");
+        data = processMD(data, "_", "<i>", "</i>");
+        data = processMD(data, "**", "<strong>", "</strong>");
+        data = processMD(data, "*", "<i>", "</i>");
+    }
     const paragraph = data.split(/\r?\n\r?\n/)
     if (!isExists(outputFolder)) {
         makeDir(outputFolder);
@@ -109,6 +116,24 @@ function processFile(fileName, folderName, outputFolder) {
         outputFolder: path.join(outputFolder, folderName),
         paragraph,
     });
+}
+
+function processMD(mdText, pattern, openTag, closeTag) {
+    let result = "";
+    let closed = true;
+
+    const arr = mdText.split(pattern);
+
+    arr.forEach((element, ind) => {
+        result += element;
+        if (ind < arr.length - 1) {
+            result += ind % 2 === 0 ? openTag : closeTag;
+            closed = !closed;
+        }
+    });
+    result += !closed ? closeTag : "";
+
+    return result;
 }
 
 /**
@@ -152,56 +177,5 @@ function generateHtml(fileContent) {
         }
     );
 }
-
-// function isDir(pathItem) {
-//     try {
-//         var stat = fs.lstatSync(pathItem);
-//         return stat.isDirectory();
-//     } catch (e) {
-//         // lstatSync throws an error if path doesn't exist
-//         return false;
-//     }
-// }
-
-// function isFile(pathItem) {
-//     try {
-//         var stat = fs.lstatSync(pathItem);
-//         return !stat.isDirectory();
-//     } catch (e) {
-//         // lstatSync throws an error if path doesn't exist
-//         return false;
-//     }
-// }
-
-// function isExists(pathItem) {
-//     try {
-//         if (fs.existsSync(pathItem)) {
-//             return true;
-//         } else {
-//             return false;
-//         }
-//     } catch (err) {
-//         console.error(err);
-//         return false;
-//     }
-// }
-
-// function makeDir(pathItem) {
-//     try {
-//         if (!fs.existsSync(pathItem)) {
-//             fs.mkdirSync(pathItem);
-//         }
-//     } catch (err) {
-//         console.error(err);
-//     }
-// }
-
-// function removeDir(pathItem) {
-//     fs.rmSync(pathItem, { recursive: true }, (err) => {
-//         if (err) {
-//             throw err;
-//         }
-//     });
-// }
 
 module.exports = runSsg;
