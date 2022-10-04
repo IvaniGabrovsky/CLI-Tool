@@ -75,8 +75,6 @@ function envParserAction(runSsg) {
       process.exit(1);
     }
 
-    console.log(command.opts());
-
     // The new options has been set, let's contiue
     return runSsg(command);
   };
