@@ -28,7 +28,8 @@ const HTML_END = `
  * @param {object} options
  * @returns
  */
-function runSsg(options) {
+function runSsg(command) {
+    const options = command.opts()
     let outputFolder = "./dist";
     let language = 'en-CA';
     // destructure parameters from object
@@ -70,7 +71,7 @@ function runSsg(options) {
     }
 
     // check if output folder exist and is folder exists delete content or if it does not exist create output folder
-    if (isExists(outputFolder) && isDir(outputFolder)) { 
+    if (isExists(outputFolder) && isDir(outputFolder)) {
             removeDir(outputFolder);
             makeDir(outputFolder);
     } else {
