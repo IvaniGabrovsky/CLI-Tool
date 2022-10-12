@@ -2,20 +2,25 @@ const fs = require("fs");
 const path = require("path");
 const chalk = require("chalk");
 const { version } = require("../../package.json");
-const { isDir, isFile, isExists, makeDir, removeDir} = require("../utils/osUtils");
+const {
+    isDir,
+    isFile,
+    isExists,
+    makeDir,
+    removeDir,
+} = require("../utils/osUtils");
 
 // return the string start part of html
 const getStartHtml = (fileName, language) => {
-    return(
-`<!doctype html>
+    return `<!doctype html>
 <html lang="${language}">
     <head>
         <meta charset="utf-8">
         <title>${fileName}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
-    <body>`);
-}
+    <body>`;
+};
 
 // contain the end of html
 const HTML_END = `
@@ -29,9 +34,9 @@ const HTML_END = `
  * @returns
  */
 function runSsg(command) {
-    const options = command.opts()
+    const options = command.opts();
     let outputFolder = "./dist";
-    let language = 'en-CA';
+    let language = "en-CA";
     // destructure parameters from object
     const { help, version: optionVersion, input, output, lang } = options;
     // print list of possible commands
@@ -72,8 +77,8 @@ function runSsg(command) {
 
     // check if output folder exist and is folder exists delete content or if it does not exist create output folder
     if (isExists(outputFolder) && isDir(outputFolder)) {
-            removeDir(outputFolder);
-            makeDir(outputFolder);
+        removeDir(outputFolder);
+        makeDir(outputFolder);
     } else {
         makeDir(outputFolder);
     }
@@ -106,15 +111,18 @@ function runSsg(command) {
  */
 function processFile(fileName, folderName, outputFolder, language) {
     const fileExtension = fileName?.split(".")[1];
-    var data = fs.readFileSync(path.join(folderName, fileName), {encoding:'utf8', flag:'r'});
-    if('MD' === fileExtension?.toUpperCase()){
+    var data = fs.readFileSync(path.join(folderName, fileName), {
+        encoding: "utf8",
+        flag: "r",
+    });
+    if ("MD" === fileExtension?.toUpperCase()) {
         data = processMD(data, "__", "<strong>", "</strong>");
         data = processMD(data, "_", "<i>", "</i>");
         data = processMD(data, "**", "<strong>", "</strong>");
         data = processMD(data, "*", "<i>", "</i>");
         data = processMD(data, "---", "<hr>", "");
     }
-    const paragraph = data.split(/\r?\n\r?\n/)
+    const paragraph = data.split(/\r?\n\r?\n/);
     if (!isExists(outputFolder)) {
         makeDir(outputFolder);
     }
@@ -125,7 +133,7 @@ function processFile(fileName, folderName, outputFolder, language) {
         fileName,
         outputFolder: path.join(outputFolder, folderName),
         paragraph,
-        language
+        language,
     });
 }
 
