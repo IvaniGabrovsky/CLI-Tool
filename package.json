@@ -4,7 +4,7 @@
   "description": "A CLI to manage a TODO list",
   "main": "index.js",
   "scripts": {
-    "start": "node ./dist -o index.html"
+    "start": "node index.js -i input"
   },
   "keywords": [
     "MIT"
