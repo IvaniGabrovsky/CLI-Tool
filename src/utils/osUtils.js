@@ -1,6 +1,6 @@
 const fs = require("fs");
 
-function isDir(pathItem) {
+isDir = (pathItem) => {
     try {
         var stat = fs.lstatSync(pathItem);
         return stat.isDirectory();
@@ -8,9 +8,9 @@ function isDir(pathItem) {
         // lstatSync throws an error if path doesn't exist
         return false;
     }
-}
+};
 
-function isFile(pathItem) {
+isFile = (pathItem) => {
     try {
         var stat = fs.lstatSync(pathItem);
         return !stat.isDirectory();
@@ -18,9 +18,9 @@ function isFile(pathItem) {
         // lstatSync throws an error if path doesn't exist
         return false;
     }
-}
+};
 
-function isExists(pathItem) {
+isExists = (pathItem) => {
     try {
         if (fs.existsSync(pathItem)) {
             return true;
@@ -31,9 +31,9 @@ function isExists(pathItem) {
         console.error(err);
         return false;
     }
-}
+};
 
-function makeDir(pathItem) {
+makeDir = (pathItem) => {
     try {
         if (!fs.existsSync(pathItem)) {
             fs.mkdirSync(pathItem);
@@ -41,19 +41,19 @@ function makeDir(pathItem) {
     } catch (err) {
         console.error(err);
     }
-}
+};
 
-function removeDir(pathItem) {
+removeDir = (pathItem) => {
     fs.rmSync(pathItem, { recursive: true }, (err) => {
         if (err) {
             throw err;
         }
     });
-}
+};
 
-function envParserAction(runSsg) {
+envParserAction = (runSsg) => {
     // Curried function, would look like (callback) => (options, command) => {} on es6
-    return function (options, command) {
+    return () => (options, command) => {
         // No config file specified, let's continue (early return)
         if (!options.config) return runSsg(command);
 
@@ -68,7 +68,7 @@ function envParserAction(runSsg) {
             const parsedConfig = JSON.parse(content);
 
             // Loop through all the keys, and set each option in Commander
-            Object.keys(parsedConfig).forEach(function (key) {
+            Object.keys(parsedConfig).forEach(() => (key) => {
                 command.setOptionValue(key, parsedConfig[key]);
             });
         } catch (err) {
@@ -79,7 +79,7 @@ function envParserAction(runSsg) {
         // The new options has been set, let's contiue
         return runSsg(command);
     };
-}
+};
 
 module.exports = {
     isDir,

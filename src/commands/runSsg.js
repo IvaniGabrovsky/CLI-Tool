@@ -33,7 +33,7 @@ const HTML_END = `
  * @param {object} options
  * @returns
  */
-function runSsg(command) {
+runSsg = (command) => {
     const options = command.opts();
     let outputFolder = "./dist";
     let language = "en-CA";
@@ -102,14 +102,14 @@ function runSsg(command) {
     }
     // Display success message to user
     console.log(chalk.green.bold("Generate HTML success"));
-}
+};
 
 /**
  * Process file to generate HTML content
  * @param {string} fileName
  * @param {string} outputFolder
  */
-function processFile(fileName, folderName, outputFolder, language) {
+processFile = (fileName, folderName, outputFolder, language) => {
     const fileExtension = path.extname(fileName);
     var data = fs.readFileSync(path.join(folderName, fileName), {
         encoding: "utf8",
@@ -135,9 +135,9 @@ function processFile(fileName, folderName, outputFolder, language) {
         paragraph,
         language,
     });
-}
+};
 
-function processMD(mdText, pattern, openTag, closeTag) {
+processMD = (mdText, pattern, openTag, closeTag) => {
     let result = "";
     let closed = true;
 
@@ -153,13 +153,13 @@ function processMD(mdText, pattern, openTag, closeTag) {
     result += !closed ? closeTag : "";
 
     return result;
-}
+};
 
 /**
  * Process folder to generate HTML content
  * @param {string} folderName
  */
-function processDir(folderName, outputFolder, language) {
+processDir = (folderName, outputFolder, language) => {
     fs.readdirSync(folderName).forEach((fileName) => {
         const fullPath = path.join(folderName, fileName);
         if (isFile(fullPath)) {
@@ -169,13 +169,13 @@ function processDir(folderName, outputFolder, language) {
         //     processDir(fullPath, outputFolder);
         // }
     });
-}
+};
 
 /**
  * Generate HTML File
  * @param {Object} fileContent { fileName: string, outputFolder; string, paragraphs: [] }
  */
-function generateHtml(fileContent) {
+generateHtml = (fileContent) => {
     const { fileName, outputFolder, paragraph, language } = fileContent;
     const htmlFile = fileName?.split(".")[0] + ".html";
     let htmlContent = getStartHtml(fileName, language);
@@ -188,13 +188,13 @@ function generateHtml(fileContent) {
     fs.writeFile(
         path.join(outputFolder, htmlFile),
         htmlContent,
-        function (err) {
+        () => (err) => {
             if (err) {
                 console.log(chalk.red.bold(err));
                 return;
             }
         }
     );
-}
+};
 
 module.exports = runSsg;
