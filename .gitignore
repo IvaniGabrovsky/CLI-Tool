@@ -6,5 +6,4 @@ npm-debug.log
 .DS_Store
 out/
 .vscode/
-input/
 dist*
