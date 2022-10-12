@@ -20,5 +20,9 @@
   },
   "bin": {
     "text-ssg-tool": "ssg.js"
+  },
+  "devDependencies": {
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1"
   }
 }
