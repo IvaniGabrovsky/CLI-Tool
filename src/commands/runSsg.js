@@ -110,7 +110,7 @@ function runSsg(command) {
  * @param {string} outputFolder
  */
 function processFile(fileName, folderName, outputFolder, language) {
-    const fileExtension = fileName?.split(".")[1];
+    const fileExtension = path.extname(fileName);
     var data = fs.readFileSync(path.join(folderName, fileName), {
         encoding: "utf8",
         flag: "r",
