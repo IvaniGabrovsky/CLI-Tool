@@ -69,39 +69,46 @@ runSsg = (command) => {
     if (lang) {
         language = lang;
     }
-    // if user does not provided any input
-    if (!input) {
-        console.log(chalk.red.bold("Missing required parameter -i, --input"));
-        return;
-    }
+    try {
+        // if user does not provided any input
+        if (!input) {
+            console.log(
+                chalk.red.bold("Missing required parameter -i, --input")
+            );
+            return;
+        }
 
-    // check if output folder exist and is folder exists delete content or if it does not exist create output folder
-    if (isExists(outputFolder) && isDir(outputFolder)) {
-        removeDir(outputFolder);
-        makeDir(outputFolder);
-    } else {
-        makeDir(outputFolder);
-    }
+        // check if output folder exist and is folder exists delete content or if it does not exist create output folder
+        if (isExists(outputFolder) && isDir(outputFolder)) {
+            removeDir(outputFolder);
+            makeDir(outputFolder);
+        } else {
+            makeDir(outputFolder);
+        }
 
-    // Display message to let user know html has been generated from input into the dist directory
-    console.log(
-        chalk.blue.bold(
-            "Generate HTML from input:",
-            input,
-            " to folder ",
-            outputFolder,
-            " in",
-            language
-        )
-    );
+        // Display message to let user know html has been generated from input into the dist directory
+        console.log(
+            chalk.blue.bold(
+                "Generate HTML from input:",
+                input,
+                " to folder ",
+                outputFolder,
+                " in",
+                language
+            )
+        );
 
-    if (isDir(input)) {
-        processDir(input, outputFolder, language);
-    } else {
-        processFile(input, "", outputFolder, language);
+        if (isDir(input)) {
+            processDir(input, outputFolder, language);
+        } else {
+            processFile(input, "", outputFolder, language);
+        }
+        // Display success message to user
+        console.log(chalk.green.bold("Generate HTML success"));
+    } catch (e) {
+        console.log(chalk.red.bold(e));
+        process.exit(1);
     }
-    // Display success message to user
-    console.log(chalk.green.bold("Generate HTML success"));
 };
 
 /**
@@ -185,16 +192,12 @@ generateHtml = (fileContent) => {
         }
     });
     htmlContent = htmlContent + HTML_END;
-    fs.writeFile(
-        path.join(outputFolder, htmlFile),
-        htmlContent,
-        () => (err) => {
-            if (err) {
-                console.log(chalk.red.bold(err));
-                return;
-            }
+    fs.writeFile(path.join(outputFolder, htmlFile), htmlContent, (err) => {
+        if (err) {
+            console.log(chalk.red.bold(err));
+            return;
         }
-    );
+    });
 };
 
 module.exports = runSsg;

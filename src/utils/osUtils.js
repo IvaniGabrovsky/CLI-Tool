@@ -6,7 +6,7 @@ isDir = (pathItem) => {
         return stat.isDirectory();
     } catch (e) {
         // lstatSync throws an error if path doesn't exist
-        return false;
+        throw `Is directory error: ${e}`;
     }
 };
 
@@ -16,7 +16,7 @@ isFile = (pathItem) => {
         return !stat.isDirectory();
     } catch (e) {
         // lstatSync throws an error if path doesn't exist
-        return false;
+        throw `Is file error: ${e}`;
     }
 };
 
@@ -27,9 +27,8 @@ isExists = (pathItem) => {
         } else {
             return false;
         }
-    } catch (err) {
-        console.error(err);
-        return false;
+    } catch (e) {
+        throw `Is file exist error: ${e}`;
     }
 };
 
@@ -38,22 +37,22 @@ makeDir = (pathItem) => {
         if (!fs.existsSync(pathItem)) {
             fs.mkdirSync(pathItem);
         }
-    } catch (err) {
-        console.error(err);
+    } catch {
+        throw `Make directory error: ${e}`;
     }
 };
 
 removeDir = (pathItem) => {
     fs.rmSync(pathItem, { recursive: true }, (err) => {
         if (err) {
-            throw err;
+            `Remove directory error: ${err}`;
         }
     });
 };
 
 envParserAction = (runSsg) => {
     // Curried function, would look like (callback) => (options, command) => {} on es6
-    return () => (options, command) => {
+    return (options, command) => {
         // No config file specified, let's continue (early return)
         if (!options.config) return runSsg(command);
 
@@ -68,12 +67,11 @@ envParserAction = (runSsg) => {
             const parsedConfig = JSON.parse(content);
 
             // Loop through all the keys, and set each option in Commander
-            Object.keys(parsedConfig).forEach(() => (key) => {
+            Object.keys(parsedConfig).forEach((key) => {
                 command.setOptionValue(key, parsedConfig[key]);
             });
         } catch (err) {
-            console.error(err);
-            process.exit(1);
+            throw `Config file parse error: ${err}`;
         }
 
         // The new options has been set, let's contiue
