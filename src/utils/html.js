@@ -28,24 +28,29 @@ const HTML_END = `
 generateHtml = (fileContent) => {
     const { fileName, outputFolder, paragraph, language } = fileContent;
     const htmlFile = fileName?.split(".")[0] + ".html";
-    let htmlContent = getStartHtml(fileName, language);
+    const htmlContent = [];
+    htmlContent.push(getStartHtml(fileName, language).toString());
     paragraph.forEach((paragraph) => {
         if (paragraph) {
-            htmlContent = htmlContent + "<p>" + paragraph + "</p>\n";
+            htmlContent.push(`<p>${paragraph}</p>\n`);
         }
     });
-    htmlContent = htmlContent + HTML_END;
+    htmlContent.push(HTML_END);
     const fullPath = path.join(outputFolder, htmlFile);
     const dirPath = path.dirname(fullPath);
     if (!isExists(dirPath)) {
         makeDir(dirPath);
     }
-    fs.writeFile(path.join(outputFolder, htmlFile), htmlContent, (err) => {
-        if (err) {
-            console.log(chalk.red.bold(err));
-            return;
+    fs.writeFile(
+        path.join(outputFolder, htmlFile),
+        htmlContent.join(" "),
+        (err) => {
+            if (err) {
+                console.log(chalk.red.bold(err));
+                return;
+            }
         }
-    });
+    );
 };
 
 module.exports = {

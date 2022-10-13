@@ -2,7 +2,7 @@ const fs = require("fs");
 
 isDir = (pathItem) => {
     try {
-        var stat = fs.lstatSync(pathItem);
+        const stat = fs.lstatSync(pathItem);
         return stat.isDirectory();
     } catch (e) {
         // lstatSync throws an error if path doesn't exist
@@ -12,7 +12,7 @@ isDir = (pathItem) => {
 
 isFile = (pathItem) => {
     try {
-        var stat = fs.lstatSync(pathItem);
+        const stat = fs.lstatSync(pathItem);
         return !stat.isDirectory();
     } catch (e) {
         // lstatSync throws an error if path doesn't exist

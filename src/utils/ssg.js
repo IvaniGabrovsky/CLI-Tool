@@ -1,8 +1,7 @@
 const chalk = require("chalk");
 const { version } = require("../../package.json");
-const { isDir, isFile, isExists, makeDir, removeDir } = require("./os");
-const { processFile, processMD, processDir } = require("./process");
-const { generateHtml } = require("./html");
+const { isDir, isExists, makeDir, removeDir } = require("./os");
+const { processFile, processDir } = require("./process");
 
 /**
  * Generate HTMLs
@@ -11,8 +10,8 @@ const { generateHtml } = require("./html");
  */
 ssg = (command) => {
     const options = command.opts();
-    let outputFolder = "./dist";
-    let language = "en-CA";
+    const outputFolder = "./dist";
+    const language = "en-CA";
     // destructure parameters from object
     const { help, version: optionVersion, input, output, lang } = options;
     // print list of possible commands
