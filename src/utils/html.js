@@ -1,5 +1,7 @@
 const fs = require("fs");
 const path = require("path");
+const chalk = require("chalk");
+const { isExists, makeDir } = require("./os");
 
 // return the string start part of html
 const getStartHtml = (fileName, language) => {
@@ -33,6 +35,11 @@ generateHtml = (fileContent) => {
         }
     });
     htmlContent = htmlContent + HTML_END;
+    const fullPath = path.join(outputFolder, htmlFile);
+    const dirPath = path.dirname(fullPath);
+    if (!isExists(dirPath)) {
+        makeDir(dirPath);
+    }
     fs.writeFile(path.join(outputFolder, htmlFile), htmlContent, (err) => {
         if (err) {
             console.log(chalk.red.bold(err));

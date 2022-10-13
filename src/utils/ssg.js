@@ -1,8 +1,8 @@
 const chalk = require("chalk");
-const { version } = require("../package.json");
-const { isDir, isFile, isExists, makeDir, removeDir } = require("./utils/os");
-const { processFile, processMD, processDir } = require("./utils/process");
-const { generateHtml } = require("./utils/html");
+const { version } = require("../../package.json");
+const { isDir, isFile, isExists, makeDir, removeDir } = require("./os");
+const { processFile, processMD, processDir } = require("./process");
+const { generateHtml } = require("./html");
 
 /**
  * Generate HTMLs

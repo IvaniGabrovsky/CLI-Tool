@@ -1,7 +1,7 @@
 #! /usr/bin/env node
 const { program } = require("commander");
-const ssg = require("./src/ssg");
-const { envParserAction } = require("./src/utils/os");
+const ssg = require("./utils/ssg");
+const { envParserAction } = require("./utils/os");
 
 try {
     program
