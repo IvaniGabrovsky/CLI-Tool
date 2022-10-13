@@ -50,11 +50,11 @@ removeDir = (pathItem) => {
     });
 };
 
-envParserAction = (runSsg) => {
+envParserAction = (ssg) => {
     // Curried function, would look like (callback) => (options, command) => {} on es6
     return (options, command) => {
         // No config file specified, let's continue (early return)
-        if (!options.config) return runSsg(command);
+        if (!options.config) return ssg(command);
 
         // Try to read, parse and set config values
         try {
@@ -75,7 +75,7 @@ envParserAction = (runSsg) => {
         }
 
         // The new options has been set, let's contiue
-        return runSsg(command);
+        return ssg(command);
     };
 };
 

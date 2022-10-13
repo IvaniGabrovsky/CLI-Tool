@@ -1,7 +1,7 @@
 #! /usr/bin/env node
 const { program } = require("commander");
-const runSsg = require("./src/commands/runSsg");
-const { envParserAction } = require("./src/utils/osUtils");
+const ssg = require("./src/ssg");
+const { envParserAction } = require("./src/utils/os");
 
 try {
     program
@@ -16,7 +16,7 @@ try {
         .option("-h, --help", "display help for SSG")
         .option("-l, --lang <laguage>", "language support")
         .option("-c, --config <config-file>", "json configuration file")
-        .action(envParserAction(runSsg));
+        .action(envParserAction(ssg));
 
     program.parse();
 } catch (e) {
