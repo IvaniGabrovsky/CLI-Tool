@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require("path");
+const { generateHtml } = require("./html");
 
 /**
  * Process file to generate HTML content
@@ -8,7 +9,7 @@ const path = require("path");
  */
 processFile = (fileName, folderName, outputFolder, language) => {
     const fileExtension = path.extname(fileName);
-    var data = fs.readFileSync(path.join(folderName, fileName), {
+    const data = fs.readFileSync(path.join(folderName, fileName), {
         encoding: "utf8",
         flag: "r",
     });
@@ -35,8 +36,8 @@ processFile = (fileName, folderName, outputFolder, language) => {
 };
 
 processMD = (mdText, pattern, openTag, closeTag) => {
-    let result = "";
-    let closed = true;
+    const result = "";
+    const closed = true;
 
     const arr = mdText.split(pattern);
 
