@@ -4,7 +4,7 @@
   "description": "A CLI to manage a TODO list",
   "main": "index.js",
   "scripts": {
-    "start": "node ./dist -o index.html"
+    "start": "node src/index.js -i input"
   },
   "keywords": [
     "MIT"
@@ -13,12 +13,13 @@
   "license": "MIT",
   "dependencies": {
     "chalk": "^4.1.0",
-    "commander": "^9.4.1",
-    "conf": "^9.0.2",
-    "http-server": "^14.1.1",
-    "n-readlines": "^1.0.1"
+    "commander": "^9.4.1"
   },
   "bin": {
     "text-ssg-tool": "ssg.js"
+  },
+  "devDependencies": {
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1"
   }
 }
