@@ -1,4 +1,5 @@
 const fs = require("fs");
+const path = require("path");
 
 isDir = (pathItem) => {
     try {
@@ -33,13 +34,20 @@ isExists = (pathItem) => {
 };
 
 makeDir = (pathItem) => {
-    try {
-        if (!fs.existsSync(pathItem)) {
-            fs.mkdirSync(pathItem);
+    const dirsArray = pathItem.split(path.sep)
+    let p = '.'
+    dirsArray.map((dir) => {
+        p = path.join(p, dir)
+        return p
+    }).forEach((dir) => {
+        try {
+            if (!fs.existsSync(dir)) {
+                fs.mkdirSync(dir);
+            }
+        } catch (e) {
+            throw `Make directory error: ${e}`;
         }
-    } catch {
-        throw `Make directory error: ${e}`;
-    }
+    })
 };
 
 removeDir = (pathItem) => {

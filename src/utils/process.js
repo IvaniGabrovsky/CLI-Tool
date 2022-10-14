@@ -63,9 +63,9 @@ processDir = (folderName, outputFolder, language) => {
         if (isFile(fullPath)) {
             processFile(fileName, folderName, outputFolder, language);
         }
-        // else {
-        //     processDir(fullPath, outputFolder);
-        // }
+        else {
+            processDir(fullPath, outputFolder, language);
+        }
     });
 };
 
