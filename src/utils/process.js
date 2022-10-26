@@ -27,16 +27,11 @@ processMDFile = (fileName, folderName, outputFolder, language) => {
         converter = new showdown.Converter(),
         html = converter.makeHtml(data);
     const htmlFile = fileName?.split(".")[0] + ".html";
-    const fullPath = path.join(outputFolder, htmlFile);
-    const dirPath = path.dirname(fullPath);
-    if (!isExists(dirPath)) {
-        makeDir(dirPath);
-    }
-    fs.writeFile(path.join(outputFolder, htmlFile), html, (err) => {
-        if (err) {
-            console.log(chalk.red.bold(err));
-            return;
-        }
+    generateHtml({
+        fileName: htmlFile,
+        outputFolder: path.join(outputFolder, folderName),
+        htmlBody: html,
+        language,
     });
 };
 
@@ -60,24 +55,6 @@ processTextFile = (fileName, folderName, outputFolder, language) => {
     });
 };
 
-processMD = (mdText, pattern, openTag, closeTag) => {
-    const result = "";
-    const closed = true;
-
-    const arr = mdText.split(pattern);
-
-    arr.forEach((element, ind) => {
-        result += element;
-        if (ind < arr.length - 1) {
-            result += ind % 2 === 0 ? openTag : closeTag;
-            closed = !closed;
-        }
-    });
-    result += !closed ? closeTag : "";
-
-    return result;
-};
-
 /**
  * Process folder to generate HTML content
  * @param {string} folderName
@@ -95,6 +72,5 @@ processDir = (folderName, outputFolder, language) => {
 
 module.exports = {
     processFile,
-    processMD,
     processDir,
 };
