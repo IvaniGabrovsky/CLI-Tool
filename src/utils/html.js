@@ -23,16 +23,16 @@ const HTML_END = `
 
 /**
  * Generate HTML File
- * @param {Object} fileContent { fileName: string, outputFolder; string, paragraphs: [] }
+ * @param {Object} fileContent { fileName: string, outputFolder; string, paragraphss: [] }
  */
 generateHtml = (fileContent) => {
-    const { fileName, outputFolder, paragraph, language } = fileContent;
+    const { fileName, outputFolder, paragraphs, language } = fileContent;
     const htmlFile = fileName?.split(".")[0] + ".html";
     const htmlContent = [];
     htmlContent.push(getStartHtml(fileName, language).toString());
-    paragraph.forEach((paragraph) => {
-        if (paragraph) {
-            htmlContent.push(`<p>${paragraph}</p>\n`);
+    paragraphs.forEach((paragraphs) => {
+        if (paragraphs) {
+            htmlContent.push(`<p>${paragraphs}</p>\n`);
         }
     });
     htmlContent.push(HTML_END);

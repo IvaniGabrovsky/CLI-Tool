@@ -45,7 +45,7 @@ processTextFile = (fileName, folderName, outputFolder, language) => {
         encoding: "utf8",
         flag: "r",
     });
-    const paragraph = data.split(/\r?\n\r?\n/);
+    const paragraphs = data.split(/\r?\n\r?\n/);
     if (!isExists(outputFolder)) {
         makeDir(outputFolder);
     }
@@ -55,7 +55,7 @@ processTextFile = (fileName, folderName, outputFolder, language) => {
     generateHtml({
         fileName,
         outputFolder: path.join(outputFolder, folderName),
-        paragraph,
+        paragraphs,
         language,
     });
 };
