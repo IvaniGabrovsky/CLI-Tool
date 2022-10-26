@@ -23,19 +23,19 @@ const HTML_END = `
 
 /**
  * Generate HTML File
- * @param {Object} fileContent { fileName: string, outputFolder; string, paragraphs: [] }
+ * @param {Object} fileContent { fileName: string, outputFolder; string, paragraphss: [] }
  */
 generateHtml = (fileContent) => {
-    const { fileName, outputFolder, paragraph, language, htmlBody } =
+    const { fileName, outputFolder, paragraphs, language, htmlBody } =
         fileContent;
     const htmlFile = fileName?.split(".")[0] + ".html";
     const htmlContent = [];
     htmlContent.push(getStartHtml(fileName, language).toString());
-    // Only if paragraph available
-    if (paragraph && paragraph.length > 0) {
-        paragraph.forEach((paragraph) => {
-            if (paragraph) {
-                htmlContent.push(`<p>${paragraph}</p>\n`);
+    // Only if paragraphs available
+    if (paragraphs && paragraphs.length > 0) {
+        paragraphs.forEach((paragraphs) => {
+            if (paragraphs) {
+                htmlContent.push(`<p>${paragraphs}</p>\n`);
             }
         });
     }
