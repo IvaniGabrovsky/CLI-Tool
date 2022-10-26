@@ -43,7 +43,6 @@ generateHtml = (fileContent) => {
         // Only if htmlBody available
         htmlContent.push(htmlBody);
     }
-
     htmlContent.push(HTML_END);
     const fullPath = path.join(outputFolder, htmlFile);
     const dirPath = path.dirname(fullPath);
