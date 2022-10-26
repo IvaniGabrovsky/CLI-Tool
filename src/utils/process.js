@@ -27,16 +27,11 @@ processMDFile = (fileName, folderName, outputFolder, language) => {
         converter = new showdown.Converter(),
         html = converter.makeHtml(data);
     const htmlFile = fileName?.split(".")[0] + ".html";
-    const fullPath = path.join(outputFolder, htmlFile);
-    const dirPath = path.dirname(fullPath);
-    if (!isExists(dirPath)) {
-        makeDir(dirPath);
-    }
-    fs.writeFile(path.join(outputFolder, htmlFile), html, (err) => {
-        if (err) {
-            console.log(chalk.red.bold(err));
-            return;
-        }
+    generateHtml({
+        fileName: htmlFile,
+        outputFolder: path.join(outputFolder, folderName),
+        htmlBody: html,
+        language,
     });
 };
 
@@ -45,7 +40,7 @@ processTextFile = (fileName, folderName, outputFolder, language) => {
         encoding: "utf8",
         flag: "r",
     });
-    const paragraphs = data.split(/\r?\n\r?\n/);
+    const paragraph = data.split(/\r?\n\r?\n/);
     if (!isExists(outputFolder)) {
         makeDir(outputFolder);
     }
@@ -55,27 +50,9 @@ processTextFile = (fileName, folderName, outputFolder, language) => {
     generateHtml({
         fileName,
         outputFolder: path.join(outputFolder, folderName),
-        paragraphs,
+        paragraph,
         language,
     });
-};
-
-processMD = (mdText, pattern, openTag, closeTag) => {
-    const result = "";
-    const closed = true;
-
-    const arr = mdText.split(pattern);
-
-    arr.forEach((element, ind) => {
-        result += element;
-        if (ind < arr.length - 1) {
-            result += ind % 2 === 0 ? openTag : closeTag;
-            closed = !closed;
-        }
-    });
-    result += !closed ? closeTag : "";
-
-    return result;
 };
 
 /**
@@ -95,6 +72,5 @@ processDir = (folderName, outputFolder, language) => {
 
 module.exports = {
     processFile,
-    processMD,
     processDir,
 };
