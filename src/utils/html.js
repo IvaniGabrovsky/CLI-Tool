@@ -23,18 +23,26 @@ const HTML_END = `
 
 /**
  * Generate HTML File
- * @param {Object} fileContent { fileName: string, outputFolder; string, paragraphss: [] }
+ * @param {Object} fileContent { fileName: string, outputFolder; string, paragraphs: [] }
  */
 generateHtml = (fileContent) => {
-    const { fileName, outputFolder, paragraphs, language } = fileContent;
+    const { fileName, outputFolder, paragraph, language, htmlBody } =
+        fileContent;
     const htmlFile = fileName?.split(".")[0] + ".html";
     const htmlContent = [];
     htmlContent.push(getStartHtml(fileName, language).toString());
-    paragraphs.forEach((paragraphs) => {
-        if (paragraphs) {
-            htmlContent.push(`<p>${paragraphs}</p>\n`);
-        }
-    });
+    // Only if paragraph available
+    if (paragraph && paragraph.length > 0) {
+        paragraph.forEach((paragraph) => {
+            if (paragraph) {
+                htmlContent.push(`<p>${paragraph}</p>\n`);
+            }
+        });
+    }
+    if (htmlBody) {
+        // Only if htmlBody available
+        htmlContent.push(htmlBody);
+    }
     htmlContent.push(HTML_END);
     const fullPath = path.join(outputFolder, htmlFile);
     const dirPath = path.dirname(fullPath);
