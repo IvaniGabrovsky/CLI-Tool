@@ -1,6 +1,8 @@
 const fs = require("fs");
 const path = require("path");
 const { generateHtml } = require("./html");
+var showdown = require("showdown");
+const chalk = require("chalk");
 
 /**
  * Process file to generate HTML content
@@ -9,17 +11,40 @@ const { generateHtml } = require("./html");
  */
 processFile = (fileName, folderName, outputFolder, language) => {
     const fileExtension = path.extname(fileName);
+    if (".MD" === fileExtension?.toUpperCase()) {
+        processMDFile(fileName, folderName, outputFolder, language);
+    } else {
+        processTextFile(fileName, folderName, outputFolder, language);
+    }
+};
+
+processMDFile = (fileName, folderName, outputFolder, language) => {
     const data = fs.readFileSync(path.join(folderName, fileName), {
         encoding: "utf8",
         flag: "r",
     });
-    if ("MD" === fileExtension?.toUpperCase()) {
-        data = processMD(data, "__", "<strong>", "</strong>");
-        data = processMD(data, "_", "<i>", "</i>");
-        data = processMD(data, "**", "<strong>", "</strong>");
-        data = processMD(data, "*", "<i>", "</i>");
-        data = processMD(data, "---", "<hr>", "");
+    var showdown = require("showdown"),
+        converter = new showdown.Converter(),
+        html = converter.makeHtml(data);
+    const htmlFile = fileName?.split(".")[0] + ".html";
+    const fullPath = path.join(outputFolder, htmlFile);
+    const dirPath = path.dirname(fullPath);
+    if (!isExists(dirPath)) {
+        makeDir(dirPath);
     }
+    fs.writeFile(path.join(outputFolder, htmlFile), html, (err) => {
+        if (err) {
+            console.log(chalk.red.bold(err));
+            return;
+        }
+    });
+};
+
+processTextFile = (fileName, folderName, outputFolder, language) => {
+    const data = fs.readFileSync(path.join(folderName, fileName), {
+        encoding: "utf8",
+        flag: "r",
+    });
     const paragraph = data.split(/\r?\n\r?\n/);
     if (!isExists(outputFolder)) {
         makeDir(outputFolder);
@@ -62,8 +87,7 @@ processDir = (folderName, outputFolder, language) => {
         const fullPath = path.join(folderName, fileName);
         if (isFile(fullPath)) {
             processFile(fileName, folderName, outputFolder, language);
-        }
-        else {
+        } else {
             processDir(fullPath, outputFolder, language);
         }
     });
