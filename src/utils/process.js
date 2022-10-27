@@ -1,8 +1,6 @@
 const fs = require("fs");
 const path = require("path");
 const { generateHtml } = require("./html");
-var showdown = require("showdown");
-const chalk = require("chalk");
 
 /**
  * Process file to generate HTML content
