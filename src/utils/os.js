@@ -2,9 +2,12 @@ const fs = require("fs");
 const path = require("path");
 
 isDir = (pathItem) => {
+    if(!pathItem){
+        return false;
+    }
     try {
         const stat = fs.lstatSync(pathItem);
-        return stat.isDirectory();
+        return !!stat?.isDirectory();
     } catch (e) {
         // lstatSync throws an error if path doesn't exist
         throw `Is directory error: ${e}`;
@@ -12,9 +15,12 @@ isDir = (pathItem) => {
 };
 
 isFile = (pathItem) => {
+    if(!pathItem){
+        return false;
+    }
     try {
         const stat = fs.lstatSync(pathItem);
-        return !stat.isDirectory();
+        return !!stat.isDirectory();
     } catch (e) {
         // lstatSync throws an error if path doesn't exist
         throw `Is file error: ${e}`;
@@ -22,6 +28,9 @@ isFile = (pathItem) => {
 };
 
 isExists = (pathItem) => {
+    if(!pathItem){
+        return false;
+    }
     try {
         if (fs.existsSync(pathItem)) {
             return true;
@@ -34,6 +43,9 @@ isExists = (pathItem) => {
 };
 
 makeDir = (pathItem) => {
+    if(!pathItem){
+        return false;
+    }
     const dirsArray = pathItem.split(path.sep)
     let p = '.'
     dirsArray.map((dir) => {
@@ -51,6 +63,9 @@ makeDir = (pathItem) => {
 };
 
 removeDir = (pathItem) => {
+    if(!pathItem){
+        return false;
+    }
     fs.rmSync(pathItem, { recursive: true }, (err) => {
         if (err) {
             `Remove directory error: ${err}`;
