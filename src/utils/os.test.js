@@ -1,5 +1,4 @@
 const fs = require("fs");
-const { eventNames } = require("process");
 const { validate, read} = require("./file");
 const { isDir, isFile, isExists, makeDir, removeDir, envParserAction } = require("./os");
 
@@ -198,4 +197,43 @@ describe("Tests removeDir", () => {
     removeDir(path);
     expect(fs.rmSync).toBeCalled();
   });
+})
+
+describe("Tests envParserAction", () => {
+  test("empty, null, undefined should return an anonymous function", () => {
+    //const ssg = "";
+    //const envFunction = envParserAction(ssg);
+    //expect(envParserAction(ssg)).any(Function);
+    [null, undefined, ''].forEach(ssg => expect(envParserAction(ssg)).any(Function))
+  });
+  //figure out anonymous function or serialize to same string error
+  
+
+  test("relative file path should return a function", () => {
+    const path = "abc";
+    expect(validate(path)).toBe(true);
+    });
+
+  // test("relative file path with a space should return true", () => {
+  //   const path = "a bc";
+  //   expect(validate(path)).toBe(true);
+  //   });
+
+  // test("absolute Unix file path should return true", () => {
+  //   const path = "/abc";
+  //   fs.envParserAction = jest.fn();
+  //   fs.existsSync = jest.fn();
+  //   fs.existsSync.mockReturnValue(false);
+  //   envParserAction(path);
+  //   expect(fs.envParserAction).toBeCalled();
+  //   });
+
+  // test("absolute Windows file path should return true", () => {
+  //   const path = "/abc";
+  //   fs.envParserAction = jest.fn();
+  //   fs.existsSync = jest.fn();
+  //   fs.existsSync.mockReturnValue(false);
+  //   envParserAction(path);
+  //   expect(fs.envParserAction).toBeCalled();
+  // });
 })

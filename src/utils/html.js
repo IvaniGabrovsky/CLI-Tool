@@ -62,5 +62,6 @@ generateHtml = (fileContent) => {
 };
 
 module.exports = {
+    getStartHtml,
     generateHtml,
 };
