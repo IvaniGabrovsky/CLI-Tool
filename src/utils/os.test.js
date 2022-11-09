@@ -37,7 +37,7 @@ describe("Tests isDir", () => {
     });
 
   test("absolute Windows file path should return true", () => {
-    const path = "/abc";
+    const path = "\abc";
     fs.lstatSync = jest.fn();
     fs.lstatSync.mockReturnValue({isDirectory(){
       return true;
@@ -79,7 +79,7 @@ describe("Tests isFile", () => {
     });
 
   test("absolute Windows file path should return true", () => {
-    const path = "/abc";
+    const path = "\abc";
     fs.lstatSync = jest.fn();
     fs.lstatSync.mockReturnValue({isDirectory(){
       return true;
@@ -116,7 +116,7 @@ describe("Tests isExists", () => {
     });
 
   test("absolute Windows file path should return true", () => {
-    const path = "/abc";
+    const path = "\abc";
     fs.lstatSync = jest.fn();
     fs.existsSync.mockReturnValue(true);
     expect(isExists(path)).toBe(true);
@@ -156,7 +156,7 @@ describe("Tests makeDir", () => {
     });
 
   test("absolute Windows file path should return true", () => {
-    const path = "/abc";
+    const path = "\abc";
     fs.mkdirSync = jest.fn();
     fs.existsSync = jest.fn();
     fs.existsSync.mockReturnValue(false);
@@ -192,7 +192,7 @@ describe("Tests removeDir", () => {
     });
 
   test("absolute Windows file path should return true", () => {
-    const path = "/abc";
+    const path = "\abc";
     fs.rmSync = jest.fn();
     removeDir(path);
     expect(fs.rmSync).toBeCalled();
@@ -204,15 +204,17 @@ describe("Tests envParserAction", () => {
     //const ssg = "";
     //const envFunction = envParserAction(ssg);
     //expect(envParserAction(ssg)).any(Function);
-    [null, undefined, ''].forEach(ssg => expect(envParserAction(ssg)).any(Function))
+
+    const mock = envParserAction(ssg);
+    [null, undefined, ''].forEach(ssg => expect(mock(ssg)).toEqual(expect.any(Function)))
   });
   //figure out anonymous function or serialize to same string error
   
 
-  test("relative file path should return a function", () => {
-    const path = "abc";
-    expect(validate(path)).toBe(true);
-    });
+  // test("relative file path should return a function", () => {
+  //   const path = "abc";
+  //   expect(validate(path)).toBe(true);
+  //   });
 
   // test("relative file path with a space should return true", () => {
   //   const path = "a bc";
@@ -229,7 +231,7 @@ describe("Tests envParserAction", () => {
   //   });
 
   // test("absolute Windows file path should return true", () => {
-  //   const path = "/abc";
+  //   const path = "\abc";
   //   fs.envParserAction = jest.fn();
   //   fs.existsSync = jest.fn();
   //   fs.existsSync.mockReturnValue(false);

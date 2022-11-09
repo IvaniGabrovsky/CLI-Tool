@@ -4,13 +4,16 @@ const chalk = require("chalk");
 const { isExists, makeDir } = require("./os");
 
 // return the string start part of html
-const getStartHtml = (fileName, language) => {
+const getStartHtml = (fileName, language = 'en') => {
+    if(!fileName){
+        return ``;
+    }
     return `<!doctype html>
 <html lang="${language}">
   <head>
-      <meta charset="utf-8">
-      <title>${fileName}</title>
-      <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <title>${fileName}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body>`;
 };
@@ -26,6 +29,9 @@ const HTML_END = `
  * @param {Object} fileContent { fileName: string, outputFolder; string, paragraphss: [] }
  */
 generateHtml = (fileContent) => {
+    if(!fileContent){
+        return;
+    }
     const { fileName, outputFolder, paragraphs, language, htmlBody } =
         fileContent;
     const htmlFile = fileName?.split(".")[0] + ".html";
