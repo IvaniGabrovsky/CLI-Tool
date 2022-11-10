@@ -7,7 +7,15 @@ const { generateHtml } = require("./html");
  * @param {string} fileName
  * @param {string} outputFolder
  */
-processFile = (fileName, folderName, outputFolder, language) => {
+processFile = (
+    fileName,
+    folderName,
+    outputFolder = "dist",
+    language = "en"
+) => {
+    if (!fileName) {
+        return undefined;
+    }
     const fileExtension = path.extname(fileName);
     if (".MD" === fileExtension?.toUpperCase()) {
         processMDFile(fileName, folderName, outputFolder, language);
@@ -38,6 +46,9 @@ processTextFile = (fileName, folderName, outputFolder, language) => {
         encoding: "utf8",
         flag: "r",
     });
+    if (!data) {
+        return undefined;
+    }
     const paragraphs = data.split(/\r?\n\r?\n/);
     if (!isExists(outputFolder)) {
         makeDir(outputFolder);
