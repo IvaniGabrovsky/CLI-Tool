@@ -1,6 +1,4 @@
 const fs = require("fs");
-const { validate, read } = require("./file");
-const ssg = require("./ssg");
 const {
     isDir,
     isFile,
@@ -151,7 +149,7 @@ describe("Tests makeDir", () => {
         [null, undefined, ""].forEach((p) => expect(makeDir(p)).toBe(false));
     });
 
-    test("relative file path should return true", () => {
+    test("relative file path should call mkdirSync", () => {
         const path = "abc";
         fs.mkdirSync = jest.fn();
         fs.existsSync = jest.fn();
@@ -160,7 +158,7 @@ describe("Tests makeDir", () => {
         expect(fs.mkdirSync).toBeCalled();
     });
 
-    test("relative file path with a space should return true", () => {
+    test("relative file path with a space should call mkdirSync", () => {
         const path = "a bc";
         fs.mkdirSync = jest.fn();
         fs.existsSync = jest.fn();
@@ -169,7 +167,7 @@ describe("Tests makeDir", () => {
         expect(fs.mkdirSync).toBeCalled();
     });
 
-    test("absolute Unix file path should return true", () => {
+    test("absolute Unix file path should call mkdirSync", () => {
         const path = "/abc";
         fs.mkdirSync = jest.fn();
         fs.existsSync = jest.fn();
@@ -178,7 +176,7 @@ describe("Tests makeDir", () => {
         expect(fs.mkdirSync).toBeCalled();
     });
 
-    test("absolute Windows file path should return true", () => {
+    test("absolute Windows file path should call mkdirSync", () => {
         const path = "abc";
         fs.mkdirSync = jest.fn();
         fs.existsSync = jest.fn();
@@ -193,28 +191,28 @@ describe("Tests removeDir", () => {
         [null, undefined, ""].forEach((p) => expect(removeDir(p)).toBe(false));
     });
 
-    test("relative file path should return true", () => {
+    test("relative file path should call rmSync", () => {
         const path = "abc";
         fs.rmSync = jest.fn();
         removeDir(path);
         expect(fs.rmSync).toBeCalled();
     });
 
-    test("relative file path with a space should return true", () => {
+    test("relative file path with a space should call rmSync", () => {
         const path = "a bc";
         fs.rmSync = jest.fn();
         removeDir(path);
         expect(fs.rmSync).toBeCalled();
     });
 
-    test("absolute Unix file path should return true", () => {
+    test("absolute Unix file path should call rmSync", () => {
         const path = "/abc";
         fs.rmSync = jest.fn();
         removeDir(path);
         expect(fs.rmSync).toBeCalled();
     });
 
-    test("absolute Windows file path should return true", () => {
+    test("absolute Windows file path should call rmSync", () => {
         const path = "abc";
         fs.rmSync = jest.fn();
         removeDir(path);

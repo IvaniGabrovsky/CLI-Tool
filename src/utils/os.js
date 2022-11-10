@@ -2,7 +2,7 @@ const fs = require("fs");
 const path = require("path");
 
 isDir = (pathItem) => {
-    if(!pathItem){
+    if (!pathItem) {
         return false;
     }
     try {
@@ -15,7 +15,7 @@ isDir = (pathItem) => {
 };
 
 isFile = (pathItem) => {
-    if(!pathItem){
+    if (!pathItem) {
         return false;
     }
     try {
@@ -28,7 +28,7 @@ isFile = (pathItem) => {
 };
 
 isExists = (pathItem) => {
-    if(!pathItem){
+    if (!pathItem) {
         return false;
     }
     try {
@@ -43,27 +43,29 @@ isExists = (pathItem) => {
 };
 
 makeDir = (pathItem) => {
-    if(!pathItem){
+    if (!pathItem) {
         return false;
     }
-    const dirsArray = pathItem.split(path.sep)
-    let p = '.'
-    dirsArray.map((dir) => {
-        p = path.join(p, dir)
-        return p
-    }).forEach((dir) => {
-        try {
-            if (!fs.existsSync(dir)) {
-                fs.mkdirSync(dir);
+    const dirsArray = pathItem.split(path.sep);
+    let p = ".";
+    dirsArray
+        .map((dir) => {
+            p = path.join(p, dir);
+            return p;
+        })
+        .forEach((dir) => {
+            try {
+                if (!fs.existsSync(dir)) {
+                    fs.mkdirSync(dir);
+                }
+            } catch (e) {
+                throw `Make directory error: ${e}`;
             }
-        } catch (e) {
-            throw `Make directory error: ${e}`;
-        }
-    })
+        });
 };
 
 removeDir = (pathItem) => {
-    if(!pathItem){
+    if (!pathItem) {
         return false;
     }
     fs.rmSync(pathItem, { recursive: true }, (err) => {
