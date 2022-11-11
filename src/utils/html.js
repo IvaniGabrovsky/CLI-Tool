@@ -51,11 +51,6 @@ generateHtml = (fileContent) => {
         });
     }
     htmlContent.push(HTML_END);
-    // const fullPath = path.join(outputFolder, htmlFile);
-    // const dirPath = path.dirname(fullPath);
-    // if (!isExists(dirPath)) {
-    //     makeDir(dirPath);
-    // }
     return htmlContent.join("");
 };
 

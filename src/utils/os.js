@@ -86,12 +86,6 @@ readFromFile = (fileName) => {
 };
 
 writeFile = (outputFileName, htmlText) => {
-    // if (!isExists(outputFolder)) {
-    //     makeDir(outputFolder);
-    // }
-    // if (!isExists(path.join(outputFolder, folderName))) {
-    //     makeDir(path.join(outputFolder, folderName));
-    // }
     const pathParts = outputFileName.split(path.sep);
     const dirPath = pathParts.slice(0, pathParts.length - 1);
     makeDir(dirPath.join(path.sep));
