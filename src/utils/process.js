@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const { generateHtml } = require("./html");
-const { writeFile } = require("./os");
+const { writeToFile } = require("./os");
 
 /**
  * Process file to generate HTML content
@@ -38,7 +38,7 @@ processMDFile = (fileName, folderName, outputFolder, language) => {
         language,
     });
     const htmlFullPath = path.join(outputFolder, htmlFile);
-    writeFile(htmlFullPath, htmlContent);
+    writeToFile(htmlFullPath, htmlContent);
 };
 
 processTextFile = (fileName, folderName, outputFolder, language) => {
@@ -54,7 +54,7 @@ processTextFile = (fileName, folderName, outputFolder, language) => {
         language,
     });
     const htmlFullPath = path.join(outputFolder, htmlFile);
-    writeFile(htmlFullPath, htmlContent);
+    writeToFile(htmlFullPath, htmlContent);
 };
 
 /**

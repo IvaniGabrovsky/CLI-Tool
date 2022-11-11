@@ -85,7 +85,7 @@ readFromFile = (fileName) => {
     return data;
 };
 
-writeFile = (outputFileName, htmlText) => {
+writeToFile = (outputFileName, htmlText) => {
     const pathParts = outputFileName.split(path.sep);
     const dirPath = pathParts.slice(0, pathParts.length - 1);
     makeDir(dirPath.join(path.sep));
@@ -133,6 +133,6 @@ module.exports = {
     makeDir,
     removeDir,
     envParserAction,
-    writeFile,
+    writeToFile,
     readFromFile,
 };
