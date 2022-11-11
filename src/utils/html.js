@@ -32,16 +32,16 @@ generateHtml = (fileContent) => {
     if (!fileContent) {
         return;
     }
-    const { fileName, outputFolder, paragraphs, language, htmlBody } =
-        fileContent;
-    // const htmlFile = fileName?.split(".")[0] + ".html";
+    const { fileName, paragraphs, language, htmlBody } = fileContent;
+    if (!paragraphs && !htmlBody) {
+        return undefined;
+    }
+
     const htmlContent = [];
-    console.log(htmlContent);
     htmlContent.push(getStartHtml(fileName, language).toString());
     // Only if paragraphs available
     if (htmlBody) {
         // Only if htmlBody available
-        console.log(htmlContent);
         htmlContent.push(htmlBody);
     } else if (paragraphs && paragraphs.length > 0) {
         paragraphs.forEach((paragraphs) => {
@@ -50,7 +50,6 @@ generateHtml = (fileContent) => {
             }
         });
     }
-    console.log(htmlContent);
     htmlContent.push(HTML_END);
     // const fullPath = path.join(outputFolder, htmlFile);
     // const dirPath = path.dirname(fullPath);
