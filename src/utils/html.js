@@ -34,21 +34,23 @@ generateHtml = (fileContent) => {
     }
     const { fileName, outputFolder, paragraphs, language, htmlBody } =
         fileContent;
-    const htmlFile = fileName?.split(".")[0] + ".html";
+    // const htmlFile = fileName?.split(".")[0] + ".html";
     const htmlContent = [];
+    console.log(htmlContent);
     htmlContent.push(getStartHtml(fileName, language).toString());
     // Only if paragraphs available
-    if (paragraphs && paragraphs.length > 0) {
+    if (htmlBody) {
+        // Only if htmlBody available
+        console.log(htmlContent);
+        htmlContent.push(htmlBody);
+    } else if (paragraphs && paragraphs.length > 0) {
         paragraphs.forEach((paragraphs) => {
             if (paragraphs) {
                 htmlContent.push(`<p>${paragraphs}</p>\n`);
             }
         });
     }
-    if (htmlBody) {
-        // Only if htmlBody available
-        htmlContent.push(htmlBody);
-    }
+    console.log(htmlContent);
     htmlContent.push(HTML_END);
     // const fullPath = path.join(outputFolder, htmlFile);
     // const dirPath = path.dirname(fullPath);
