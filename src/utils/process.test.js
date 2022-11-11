@@ -1,10 +1,4 @@
-const fs = require("fs");
-const {
-    processFile,
-    processMDFile,
-    processTextFile,
-    processDir,
-} = require("./process");
+const { processFile } = require("./process");
 
 jest.mock("fs");
 

@@ -1,8 +1,3 @@
-const fs = require("fs");
-const path = require("path");
-const chalk = require("chalk");
-const { isExists, makeDir } = require("./os");
-
 // return the string start part of html
 const getStartHtml = (fileName, language = "en") => {
     if (!fileName) {

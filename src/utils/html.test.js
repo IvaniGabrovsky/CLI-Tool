@@ -143,14 +143,14 @@ describe("Tests generateHtml", () => {
     test("fileContent with expected output, and with paragraphs should return expected output", () => {
         const expectedOutput = `<!doctype html>
 <html lang=\"en\">
-<head>
-  <meta charset=\"utf-8\">
-  <title>inputMD</title>
-  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">
-</head>
-<body><p>Lorem ipsum dolor sit amet</p>
+  <head>
+    <meta charset=\"utf-8\">
+    <title>inputMD</title>
+    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">
+  </head>
+  <body><p>Lorem ipsum dolor sit amet</p>
 
-</body>
+  </body>
 </html>
 `;
         const fileContent = {
@@ -165,13 +165,13 @@ describe("Tests generateHtml", () => {
     test("fileContent with expected output, and with no paragraphs should return expectedOutput", () => {
         const expectedOutput = `<!doctype html>
       <html lang=en>
-        <head>
-          <meta charset=\"utf-8\">
-          <title>Hello world</title>
-          <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">
-        </head>
-        <body>
-</body>
+      <head>
+        <meta charset=\"utf-8\">
+        <title>Hello world</title>
+        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">
+      </head>
+      <body>
+  </body>
 </html>
 `;
         const fileContent = {
@@ -181,12 +181,12 @@ describe("Tests generateHtml", () => {
             language: "en",
             htmlBody: `<!doctype html>
       <html lang=en>
-        <head>
-          <meta charset="utf-8">
-          <title>Hello world</title>
-          <meta name="viewport" content="width=device-width, initial-scale=1">
-        </head>
-        <body>`,
+      <head>
+        <meta charset="utf-8">
+        <title>Hello world</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+      </head>
+      <body>`,
         };
         expect(generateHtml(fileContent)).toBe(expectedOutput);
     });
@@ -201,13 +201,13 @@ describe("Tests generateHtml", () => {
         };
         expect(generateHtml(fileContent)).toBe(`<!doctype html>
 <html lang=\"en\">
-<head>
-  <meta charset=\"utf-8\">
-  <title>inputMD</title>
-  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">
-</head>
-<body><div>dsdbcvvc</div>
-</body>
+  <head>
+    <meta charset=\"utf-8\">
+    <title>inputMD</title>
+    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">
+  </head>
+  <body><div>dsdbcvvc</div>
+  </body>
 </html>
 `);
     });
@@ -223,14 +223,14 @@ describe("Tests generateHtml", () => {
         };
         expect(generateHtml(fileContent)).toBe(`<!doctype html>
 <html lang="en">
-<head>
-  <meta charset=\"utf-8\">
-  <title>ext.txt</title>
-  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">
-</head>
-<body><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+  <head>
+    <meta charset=\"utf-8\">
+    <title>ext.txt</title>
+    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">
+  </head>
+  <body><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
 
-</body>
+  </body>
 </html>
 `);
     });

@@ -1,6 +1,5 @@
 const fs = require("fs");
 const path = require("path");
-//const { generateHtml } = require("./html");
 
 isDir = (pathItem) => {
     if (!pathItem) {
