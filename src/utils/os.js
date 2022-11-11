@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require("path");
+//const { generateHtml } = require("./html");
 
 isDir = (pathItem) => {
     if (!pathItem) {
@@ -46,6 +47,7 @@ makeDir = (pathItem) => {
     if (!pathItem) {
         return false;
     }
+    console.log(pathItem);
     const dirsArray = pathItem.split(path.sep);
     let p = ".";
     dirsArray
@@ -71,6 +73,32 @@ removeDir = (pathItem) => {
     fs.rmSync(pathItem, { recursive: true }, (err) => {
         if (err) {
             `Remove directory error: ${err}`;
+        }
+    });
+};
+
+readFromFile = (fileName) => {
+    const data = fs.readFileSync(fileName, {
+        encoding: "utf8",
+        flag: "r",
+    });
+    return data;
+};
+
+writeFile = (outputFileName, htmlText) => {
+    // if (!isExists(outputFolder)) {
+    //     makeDir(outputFolder);
+    // }
+    // if (!isExists(path.join(outputFolder, folderName))) {
+    //     makeDir(path.join(outputFolder, folderName));
+    // }
+    const pathParts = outputFileName.split(path.sep);
+    const dirPath = pathParts.slice(0, pathParts.length - 1);
+    makeDir(dirPath.join(path.sep));
+    fs.writeFile(outputFileName, htmlText, (err) => {
+        if (err) {
+            console.log(chalk.red.bold(err));
+            return;
         }
     });
 };
@@ -111,4 +139,6 @@ module.exports = {
     makeDir,
     removeDir,
     envParserAction,
+    writeFile,
+    readFromFile,
 };

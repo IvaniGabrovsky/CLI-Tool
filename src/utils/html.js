@@ -50,21 +50,12 @@ generateHtml = (fileContent) => {
         htmlContent.push(htmlBody);
     }
     htmlContent.push(HTML_END);
-    const fullPath = path.join(outputFolder, htmlFile);
-    const dirPath = path.dirname(fullPath);
-    if (!isExists(dirPath)) {
-        makeDir(dirPath);
-    }
-    fs.writeFile(
-        path.join(outputFolder, htmlFile),
-        htmlContent.join(" "),
-        (err) => {
-            if (err) {
-                console.log(chalk.red.bold(err));
-                return;
-            }
-        }
-    );
+    // const fullPath = path.join(outputFolder, htmlFile);
+    // const dirPath = path.dirname(fullPath);
+    // if (!isExists(dirPath)) {
+    //     makeDir(dirPath);
+    // }
+    return htmlContent.join("");
 };
 
 module.exports = {

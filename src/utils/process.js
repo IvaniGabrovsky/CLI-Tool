@@ -1,6 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const { generateHtml } = require("./html");
+const { writeFile } = require("./os");
 
 /**
  * Process file to generate HTML content
@@ -25,43 +26,35 @@ processFile = (
 };
 
 processMDFile = (fileName, folderName, outputFolder, language) => {
-    const data = fs.readFileSync(path.join(folderName, fileName), {
-        encoding: "utf8",
-        flag: "r",
-    });
+    const data = readFromFile(fileName);
     var showdown = require("showdown"),
         converter = new showdown.Converter(),
         html = converter.makeHtml(data);
     const htmlFile = fileName?.split(".")[0] + ".html";
-    generateHtml({
+    const htmlContent = generateHtml({
         fileName: htmlFile,
         outputFolder: path.join(outputFolder, folderName),
         htmlBody: html,
         language,
     });
+    const htmlFullPath = path.join(outputFolder, htmlFile);
+    writeFile(htmlFullPath, htmlContent);
 };
 
 processTextFile = (fileName, folderName, outputFolder, language) => {
-    const data = fs.readFileSync(path.join(folderName, fileName), {
-        encoding: "utf8",
-        flag: "r",
-    });
+    const data = readFromFile(fileName);
     if (!data) {
         return undefined;
     }
     const paragraphs = data.split(/\r?\n\r?\n/);
-    if (!isExists(outputFolder)) {
-        makeDir(outputFolder);
-    }
-    if (!isExists(path.join(outputFolder, folderName))) {
-        makeDir(path.join(outputFolder, folderName));
-    }
-    generateHtml({
+    let htmlContent = generateHtml({
         fileName,
         outputFolder: path.join(outputFolder, folderName),
         paragraphs,
         language,
     });
+    const htmlFullPath = path.join(outputFolder, htmlFile);
+    writeFile(htmlFullPath, htmlContent);
 };
 
 /**

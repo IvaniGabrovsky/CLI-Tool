@@ -140,7 +140,26 @@ describe("Tests generateHtml", () => {
         );
     });
 
-    test("fileContent should return undefined", () => {
+    test("fileContent with expected output, and with paragraphs should return expectedOutput", () => {
+        const expectedOutput = `<!doctype html>
+<html lang=\"en\">
+  <head>
+    <meta charset=\"utf-8\">
+    <title>inputMD</title>
+    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">
+  </head>
+  <body><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
+<!doctype html>
+            <html lang=en>
+              <head>
+                <meta charset=\"utf-8\">
+                <title>Hello world</title>
+                <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">
+              </head>
+              <body>
+  </body>
+</html>
+`;
         const fileContent = {
             fileName: "inputMD",
             outputFolder: "dist",
@@ -157,10 +176,21 @@ describe("Tests generateHtml", () => {
               </head>
               <body>`,
         };
-        expect(generateHtml(fileContent)).toBe(undefined);
+        expect(generateHtml(fileContent)).toBe(expectedOutput);
     });
 
-    test("fileContent with no paragraphs should return undefined", () => {
+    test("fileContent with expected output, and with no paragraphs should return expectedOutput", () => {
+        const expectedOutput = `<!doctype html>
+        <html lang=en>
+          <head>
+            <meta charset=\"utf-8\">
+            <title>Hello world</title>
+            <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">
+          </head>
+          <body>
+  </body>
+</html>
+`;
         const fileContent = {
             fileName: "",
             outputFolder: "dist",
@@ -175,6 +205,74 @@ describe("Tests generateHtml", () => {
           </head>
           <body>`,
         };
-        expect(generateHtml(fileContent)).toBe(undefined);
+        expect(generateHtml(fileContent)).toBe(expectedOutput);
+    });
+
+    test("fileContent with empty expected output, and with no paragraphs should return expectedOutput", () => {
+        const expectedOutput = `<!doctype html>
+<html lang=\"en\">
+  <head>
+    <meta charset=\"utf-8\">
+    <title>inputMD</title>
+    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">
+  </head>
+  <body><!doctype html>
+          <html lang=en>
+            <head>
+              <meta charset=\"utf-8\">
+              <title>Hello world</title>
+              <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">
+            </head>
+            <body>
+  </body>
+</html>
+`;
+        const fileContent = {
+            fileName: "inputMD",
+            outputFolder: "dist",
+            paragraphs: [],
+            language: "en",
+            htmlBody: `<!doctype html>
+          <html lang=en>
+            <head>
+              <meta charset="utf-8">
+              <title>Hello world</title>
+              <meta name="viewport" content="width=device-width, initial-scale=1">
+            </head>
+            <body>`,
+        };
+        expect(generateHtml(fileContent)).toBe(expectedOutput);
+    });
+
+    test("fileContent with empty expected output, and with paragraphs should return expectedOutput", () => {
+        const expectedOutput = `
+<!doctype html>
+      <html lang=en>
+        <head>
+          <meta charset=\"utf-8\">
+          <title>Hello world</title>
+          <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">
+        </head>
+        <body><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
+  </body>
+</html>
+`;
+        const fileContent = {
+            fileName: "",
+            outputFolder: "dist",
+            paragraphs: [
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
+            ],
+            language: "en",
+            htmlBody: `<!doctype html>
+      <html lang=en>
+        <head>
+          <meta charset="utf-8">
+          <title>Hello world</title>
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+        </head>
+        <body>`,
+        };
+        expect(generateHtml(fileContent)).toBe(expectedOutput);
     });
 });
