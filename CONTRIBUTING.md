@@ -59,7 +59,9 @@ git pull upstream main
 
 9. Make the changes and push them to the remote repository by:
 
-The command "git push origin branch-name-here"
+```
+git push origin branch-name-here
+```
 
 10. Send an upstream repository a **pull request**.
 
@@ -85,19 +87,25 @@ The command "git push origin branch-name-here"
 
 Run the following command to make your code look prettier and run the prettier:
 
-"npm run prettier""
+```
+npm run prettier
+```
 
 Run: to see if all files are formatted.
 
-Run prettier-check with npm
+```
+npm run prettier-check
+```
 
-eslint #
+# eslint
 
-Run: to execute eslint on all files.
+Run:
 
 ```
 npm run eslint
 ```
+
+to execute eslint on all files.
 
 ---
 
@@ -105,11 +113,15 @@ npm run eslint
 
 Run the tool to test it.
 
-The command "npm run test"
+The command
+
+```
+npm run test
+```
 
 Running a single test
 
-swap out the command "test" for "test.only"
+swap out the command `test` for `test.only`
 
 Run: to test a single file.
 
