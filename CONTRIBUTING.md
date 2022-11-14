@@ -21,7 +21,7 @@ Here is a brief summary!
 
 <br>
 
-2. In your local GitHub organization, fork the repository linked to the problem. The repository "underyour-GitHub-username/repository-name" will now be accessible to you.
+2. In your local GitHub organization, fork the repository linked to the problem. The repository `underyour-GitHub-username/repository-name` will now be accessible to you.
 
 <br>
 
