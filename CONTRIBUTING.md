@@ -31,22 +31,22 @@ Here is a brief summary!
 git clone https://github.com/github-username/text-ssg-tool.git.
 ```
 
-4. Include the upstream remote:
+4. Create working branch:
 
 ```
-git remote add upstream https://github.com/IvaniGabrovsky/todo-list.git
+git checkout -b branch-name
 ```
 
-5. If you think your fork is behind, pull the most recent changes from the main repository:
+5. Include the upstream remote:
+
+```
+git push --set-upstream origin branch-name
+```
+
+6. If you think your fork is behind, pull the most recent changes from the main repository:
 
 ```
 git pull upstream main
-```
-
-6. Create a new branch and switch to it for your issue fix or feature using:
-
-```
-   git switch -c branch-name-here
 ```
 
 7. Make the necessary adjustments for the problem you're attempting to solve or the feature you want to include.
@@ -83,32 +83,6 @@ git push origin branch-name-here
 
 ## <br>
 
-# Prettier
-
-Run the following command to make your code look prettier and run the prettier:
-
-```
-npm run prettier
-```
-
-Run: to see if all files are formatted.
-
-```
-npm run prettier-check
-```
-
-# eslint
-
-Run:
-
-```
-npm run eslint
-```
-
-to execute eslint on all files.
-
----
-
 # Testing
 
 Run the tool to test it.
@@ -117,16 +91,6 @@ The command
 
 ```
 npm run test
-```
-
-Running a single test
-
-swap out the command `test` for `test.only`
-
-Run: to test a single file.
-
-```
-npm test --watchAll
 ```
 
 ### THANK YOU FOR YOUR PARTICIPATION!
