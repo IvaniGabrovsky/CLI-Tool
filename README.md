@@ -4,23 +4,13 @@ A Cli tool reading an file with text and converting to an out file in html using
 
 ## Installation
 
-Clone the repository:
-
-```
-git clone https://github.com/IvaniGabrovsky/text-ssg-tool
-```
-
-Install the dependencies:
+1. Install the dependencies:
 
 ```
 npm i
 ```
 
-Install the package globally on your machine:
-
-```
-npm i -g
-```
+2. cd to project folder
 
 ## Usage
 
@@ -33,4 +23,3 @@ To use a specific language other English add -l followed by the language code da
 "-o, --output <output-folder>", "output folder"</br>
 "-v, --version", "version"</br>
 "-h, --help", "display help for SSG"</br>
-
