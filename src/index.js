@@ -1,4 +1,5 @@
 #! /usr/bin/env node
+const chalk = require("chalk");
 const { program } = require("commander");
 const ssg = require("./utils/ssg");
 const { envParserAction } = require("./utils/os");
