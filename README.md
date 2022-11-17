@@ -36,11 +36,3 @@ For any of the commands listed below in the help menu type in "text-ssg-tool" be
 2. `node src/index.js -i input/text.txt` (convert a text file inside input folder into html)
 
 3. `node src/index.js -i input/text.txt` (convert all files inside input folder inside Sherlock-Holmes-Selected-Stories into html)
-
-To use a specific language other English add -l followed by the language code dash language Country</br>
-"Display help"</br>
-"-i, --input <input-file>", "file or folder to parse"</br>
-"-l, --lang <laguage>", "language support"</br>
-"-o, --output <output-folder>", "output folder"</br>
-"-v, --version", "version"</br>
-"-h, --help", "display help for SSG"</br>
