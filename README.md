@@ -25,7 +25,9 @@ For any of the commands listed below in the help menu type in "text-ssg-tool" be
 
 3. Run `node src/index.js -i [name of the file]` to convert file from markdown or text to html.
 
-4. Run `node src/index.js -l [name of the file]` to convert file from markdown or text to html.
+4. Run `node src/index.js -l [language] -i [name of the file]` to convert file from markdown or text to html.
+
+5. Run `node src/index.js -i [name of the file] -l [language]` to convert file from markdown or text to html.
 
 # Examples
 

@@ -11,7 +11,7 @@ const { processFile, processDir } = require("./process");
 ssg = (command) => {
     const options = command.opts();
     const outputFolder = "./dist";
-    const language = "en-CA";
+    let language = "en-CA";
     // destructure parameters from object
     const { help, version: optionVersion, input, output, lang } = options;
     // print list of possible commands
