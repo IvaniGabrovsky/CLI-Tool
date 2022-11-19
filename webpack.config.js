@@ -1,6 +1,6 @@
 // Generated using webpack-cli https://github.com/webpack/webpack-cli
 
-//const path = require("path");
+const path = require("path");
 
 const isProduction = process.env.NODE_ENV == "production";
 
