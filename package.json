@@ -1,6 +1,6 @@
 {
   "name": "text-ssg-tool",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "author": "Ivan Gabrovsky igabrovsky@myseneca.ca",
   "description": "A CLI to manage a TODO list",
   "main": "index.js",
