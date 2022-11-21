@@ -1,6 +1,7 @@
 {
   "name": "text-ssg-tool",
   "version": "0.0.1",
+  "author": "Ivan Gabrovsky igabrovsky@myseneca.ca",
   "description": "A CLI to manage a TODO list",
   "main": "index.js",
   "scripts": {
@@ -15,7 +16,6 @@
   "keywords": [
     "MIT"
   ],
-  "author": "Ivan Gabrovsky",
   "license": "MIT",
   "dependencies": {
     "chalk": "^4.1.2",
