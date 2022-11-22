@@ -4,13 +4,11 @@ A Cli tool reading an file with text and converting to an out file in html using
 
 ## Installation
 
-1. Install the dependencies:
+Install the dependencies:
 
 ```
 npm i
 ```
-
-2. cd to project folder
 
 ## Usage
 
