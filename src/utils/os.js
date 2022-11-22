@@ -46,7 +46,6 @@ makeDir = (pathItem) => {
     if (!pathItem) {
         return false;
     }
-    console.log(pathItem);
     const dirsArray = pathItem.split(path.sep);
     let p = ".";
     dirsArray

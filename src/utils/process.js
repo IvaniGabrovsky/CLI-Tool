@@ -53,7 +53,7 @@ processTextFile = (fileName, folderName, outputFolder, language) => {
         paragraphs,
         language,
     });
-    const htmlFullPath = path.join(outputFolder, htmlFile);
+    const htmlFullPath = path.join(outputFolder, htmlContent);
     writeToFile(htmlFullPath, htmlContent);
 };
 
