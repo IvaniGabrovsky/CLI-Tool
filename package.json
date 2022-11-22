@@ -20,7 +20,8 @@
   "dependencies": {
     "chalk": "^4.1.2",
     "commander": "^9.4.1",
-    "showdown": "^2.1.0"
+    "showdown": "^2.1.0",
+    "text-ssg-tool": "^1.0.0"
   },
   "bin": {
     "text-ssg-tool": "ssg.js"
