@@ -38,3 +38,15 @@ For any of the commands listed below in the help menu type in "text-ssg-tool" be
 2. `node src/index.js -i input/text.txt` (convert a text file inside input folder into html)
 
 3. `node src/index.js -i input/text.txt` (convert all files inside input folder inside Sherlock-Holmes-Selected-Stories into html)
+
+# Test Site
+
+```
+https://ivan-text-ssg-tool.netlify.app/
+```
+
+# License
+
+```
+[**MIT License**](https://choosealicense.com/licenses/mit/)
+```
