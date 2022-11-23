@@ -42,7 +42,7 @@ processMDFile = (fileName, folderName, outputFolder, language) => {
 };
 
 processTextFile = (fileName, folderName, outputFolder, language) => {
-    const data = readFromFile(fileName);
+    const data = readFromFile(path.join(folderName, fileName));
     if (!data) {
         return undefined;
     }
@@ -53,7 +53,7 @@ processTextFile = (fileName, folderName, outputFolder, language) => {
         paragraphs,
         language,
     });
-    const htmlFullPath = path.join(outputFolder, htmlContent);
+    const htmlFullPath = path.join(outputFolder, fileName);
     writeToFile(htmlFullPath, htmlContent);
 };
 

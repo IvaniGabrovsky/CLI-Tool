@@ -20,7 +20,7 @@ isFile = (pathItem) => {
     }
     try {
         const stat = fs.lstatSync(pathItem);
-        return !!stat.isDirectory();
+        return !stat.isDirectory();
     } catch (e) {
         // lstatSync throws an error if path doesn't exist
         throw `Is file error: ${e}`;
