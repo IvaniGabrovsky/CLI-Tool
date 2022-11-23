@@ -10,10 +10,6 @@ Install the dependencies:
 npm i
 ```
 
-```
-npm install text-ssg-tool
-```
-
 ## Usage
 
 To get a list of options type "text-ssg-tool" followed by -h.</br>
