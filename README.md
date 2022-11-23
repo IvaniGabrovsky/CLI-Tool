@@ -39,6 +39,10 @@ For any of the commands listed below in the help menu type in "text-ssg-tool" be
 
 3. `node src/index.js -i input/Sherlock-Holmes-Selected-Stories` (convert all files inside input folder inside Sherlock-Holmes-Selected-Stories into html)
 
+4. `node src/index.js -l fr -i input/Sherlock-Holmes-Selected-Stories` (convert all files inside input folder with french language inside Sherlock-Holmes-Selected-Stories into html)
+
+5. `node src/index.js -i input/Sherlock-Holmes-Selected-Stories -l fr` (convert all files inside input folder with french language inside Sherlock-Holmes-Selected-Stories into html)
+
 # Test Site
 
 ```
