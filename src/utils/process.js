@@ -47,13 +47,14 @@ processTextFile = (fileName, folderName, outputFolder, language) => {
         return undefined;
     }
     const paragraphs = data.split(/\r?\n\r?\n/);
+    const htmlFile = fileName?.split(".")[0] + ".html";
     let htmlContent = generateHtml({
-        fileName,
+        fileName: htmlFile,
         outputFolder: path.join(outputFolder, folderName),
         paragraphs,
         language,
     });
-    const htmlFullPath = path.join(outputFolder, fileName);
+    const htmlFullPath = path.join(outputFolder, htmlFile);
     writeToFile(htmlFullPath, htmlContent);
 };
 
